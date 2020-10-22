@@ -37,9 +37,20 @@ class AddClothingChoicePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             FullWidthButton(text: "Добавить руками"),
-            FullWidthButton(text: "Добавить через Lamoda", leading: Image.asset("assets/lamoda.jpg")),
+            LamodaButtonWithInput()
           ],
         ),
+      ),
+    );
+  }
+}
+
+class AddClothingPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Text("AddClothingPage"),
       ),
     );
   }

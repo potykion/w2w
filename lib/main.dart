@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
         routes: {
           "/": (_) => MyHomePage(),
           "/add-clothing-choice": (_) => AddClothingChoicePage(),
+          "/add-clothing": (_) => AddClothingPage(),
         },
         initialRoute: "/",
       );

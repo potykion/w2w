@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -62,7 +61,6 @@ class LamodaLinkInput extends StatefulWidget {
 class _LamodaLinkInputState extends State<LamodaLinkInput> {
   TextEditingController tec = TextEditingController();
 
-  // https://www.lamoda.ru/p/he002emklgv2/clothes-hebymango-futbolka/
   String lamodaLink;
 
   bool showSubmitIcon = false;
@@ -99,8 +97,8 @@ class _LamodaLinkInputState extends State<LamodaLinkInput> {
           queryParameters: {"url": lamodaLink},
         );
         var resp = await http.get(
-            url,
-            headers: {'Content-Type': 'application/json'}
+          url,
+          headers: {'Content-Type': 'application/json'},
         );
         var clothing = jsonDecode(utf8.decode(resp.bodyBytes));
 
@@ -123,6 +121,8 @@ class _LamodaLinkInputState extends State<LamodaLinkInput> {
         controller: tec,
         readOnly: showProgress,
         decoration: InputDecoration(
+          helperText: "Например, https://lamoda.ru/p/he002emklgv2",
+          labelText: "Ссылка на шмотку с Lamoda",
           border: OutlineInputBorder(),
           focusColor: Theme.of(context).primaryColor,
           suffixIcon: showSubmitIcon

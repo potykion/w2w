@@ -1,4 +1,8 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class FullWidthButton extends StatelessWidget {
   final String text;
@@ -57,35 +61,75 @@ class LamodaLinkInput extends StatefulWidget {
 
 class _LamodaLinkInputState extends State<LamodaLinkInput> {
   TextEditingController tec = TextEditingController();
-  bool showIcon = false;
+
+  // https://www.lamoda.ru/p/he002emklgv2/clothes-hebymango-futbolka/
+  String lamodaLink;
+
+  bool showSubmitIcon = false;
+  bool showProgress = false;
 
   @override
   void initState() {
     super.initState();
-    tec.addListener(() => setState(() => showIcon = tec.text.isNotEmpty));
+    tec.addListener(() => setState(() {
+          if (lamodaLink != tec.text) {
+            lamodaLink = tec.text;
+            showSubmitIcon = tec.text.isNotEmpty;
+          }
+        }));
   }
 
   @override
   Widget build(BuildContext context) {
-    var icon = IconButton(
-      icon: Icon(
-        Icons.arrow_forward,
-        color: Theme.of(context).primaryColor,
-      ),
-      onPressed: () => Navigator.pushNamed(
-        context,
-        "/add-clothing",
-      ),
+    var submitIcon = IconButton(
+      icon: Icon(Icons.arrow_forward),
+      onPressed: () async {
+        FocusScope.of(context).unfocus();
+
+        setState(() {
+          showSubmitIcon = false;
+          showProgress = true;
+        });
+
+        var url = Uri(
+          scheme: "http",
+          host: "84.201.135.199",
+          port: 8098,
+          path: "/",
+          queryParameters: {"url": lamodaLink},
+        );
+        var resp = await http.get(
+            url,
+            headers: {'Content-Type': 'application/json'}
+        );
+        var clothing = jsonDecode(utf8.decode(resp.bodyBytes));
+
+        // Navigator.pushNamed(
+        //   context,
+        //   "/add-clothing",
+        //   arguments: clothing
+        // )
+      },
+    );
+
+    var progress = Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: CircularProgressIndicator(),
     );
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
       child: TextFormField(
         controller: tec,
+        readOnly: showProgress,
         decoration: InputDecoration(
           border: OutlineInputBorder(),
           focusColor: Theme.of(context).primaryColor,
-          suffixIcon: showIcon ? icon : null,
+          suffixIcon: showSubmitIcon
+              ? submitIcon
+              : showProgress
+                  ? progress
+                  : null,
         ),
       ),
     );

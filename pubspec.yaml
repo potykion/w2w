@@ -27,10 +27,22 @@ dependencies:
   # http-запосы
   http: ^0.12.2
 
+  # дата-классы
+  freezed_annotation:
+
+  # джсон-(де)сериализация
+  json_serializable: ^3.5.0
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  # кодогенерация
+  build_runner:
+
+  # кодогенерация дата-классов
+  freezed:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -1,7 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:w2w/services.dart';
+
+import 'api_clients.dart';
 
 class FullWidthButton extends StatelessWidget {
   final String text;
@@ -89,19 +89,8 @@ class _LamodaLinkInputState extends State<LamodaLinkInput> {
           showProgress = true;
         });
 
-        var url = Uri(
-          scheme: "http",
-          host: "84.201.135.199",
-          port: 8098,
-          path: "/",
-          queryParameters: {"url": lamodaLink},
-        );
-        var resp = await http.get(
-          url,
-          headers: {'Content-Type': 'application/json'},
-        );
-        var clothing = jsonDecode(utf8.decode(resp.bodyBytes));
-
+        var clothing =
+            await LoadLamodaClothing(LamodaParseApiClient())(lamodaLink);
         // Navigator.pushNamed(
         //   context,
         //   "/add-clothing",

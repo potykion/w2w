@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:w2w/clothing/dependencies/api_clients.dart';
 import 'package:w2w/clothing/domain/use_cases.dart';
-import 'package:w2w/core/ui/widgets/buttons.dart';
+import 'package:w2w/core/ui/components/buttons.dart';
 
 class LamodaLinkInput extends StatefulWidget {
   @override
@@ -40,12 +40,14 @@ class _LamodaLinkInputState extends State<LamodaLinkInput> {
         });
 
         var clothing =
-            await LoadLamodaClothing(LamodaParseApiClient())(lamodaLink);
-        // Navigator.pushNamed(
-        //   context,
-        //   "/add-clothing",
-        //   arguments: clothing
-        // )
+            await LoadLamodaClothing(FakeLamodaParseApiClient())(lamodaLink);
+
+        setState(() {
+          showSubmitIcon = true;
+          showProgress = false;
+        });
+
+        Navigator.pushNamed(context, "/clothing-form", arguments: clothing);
       },
     );
 
@@ -61,7 +63,7 @@ class _LamodaLinkInputState extends State<LamodaLinkInput> {
         readOnly: showProgress,
         decoration: InputDecoration(
           helperText: "Например, https://lamoda.ru/p/he002emklgv2",
-          labelText: "Ссылка на шмотку с Lamoda",
+          hintText: "Ссылка на шмотку с Lamoda",
           border: OutlineInputBorder(),
           focusColor: Theme.of(context).primaryColor,
           suffixIcon: showSubmitIcon

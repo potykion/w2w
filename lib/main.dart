@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:w2w/theme.dart';
 
 import 'clothing/ui/pages/add.dart';
+import 'clothing/ui/pages/form.dart';
 import 'clothing/ui/pages/list.dart';
 
 void main() {
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
         routes: {
           "/": (_) => ClothingListPage(),
           "/add-clothing-choice": (_) => AddClothingChoicePage(),
-          "/add-clothing": (_) => AddClothingPage(),
+          "/clothing-form": (_) => ClothingFormPage(),
         },
         initialRoute: "/",
       );

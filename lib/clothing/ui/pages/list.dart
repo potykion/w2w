@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:w2w/core/ui/widgets/buttons.dart';
+import 'package:w2w/core/ui/components/buttons.dart';
 
 class ClothingListPage extends StatelessWidget {
   @override

@@ -21,3 +21,19 @@ class LamodaParseApiClient {
     return clothing;
   }
 }
+
+/// Возвращает шмотку по ссылке: https://lamoda.ru/p/he002emklgv2
+class FakeLamodaParseApiClient implements LamodaParseApiClient {
+  @override
+  Future<Clothing> call(String lamodaLink) async {
+    return Clothing(
+      title: "Mango Man CHERLO",
+      type: "Футболка",
+      images: [
+        "https://a.lmcdn.ru/img600x866/H/E/HE002EMKLGV2_11830316_1_v1.jpg",
+        "https://a.lmcdn.ru/img600x866/H/E/HE002EMKLGV2_11830318_3_v1.jpg",
+        "https://a.lmcdn.ru/img600x866/H/E/HE002EMKLGV2_11830317_2_v1.jpg"
+      ],
+    );
+  }
+}

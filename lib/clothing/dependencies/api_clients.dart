@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'models.dart';
+import '../domain/models.dart';
 
 class LamodaParseApiClient {
   Future<Clothing> call(String lamodaLink) async {

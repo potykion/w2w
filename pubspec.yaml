@@ -33,6 +33,11 @@ dependencies:
   # джсон-(де)сериализация
   json_serializable: ^3.5.0
 
+  # автокомплит
+  flutter_typeahead: ^1.8.8
+
+  # стейт-менеджмент / роутинг / диай
+  get:
 
 dev_dependencies:
   flutter_test:

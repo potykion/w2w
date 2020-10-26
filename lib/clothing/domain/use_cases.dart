@@ -1,4 +1,5 @@
-import 'api_clients.dart';
+import 'package:w2w/clothing/dependencies/api_clients.dart';
+
 import 'models.dart';
 
 class LoadLamodaClothing {

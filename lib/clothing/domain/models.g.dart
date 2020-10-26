@@ -8,9 +8,9 @@ part of 'models.dart';
 
 _$_Clothing _$_$_ClothingFromJson(Map<String, dynamic> json) {
   return _$_Clothing(
-    title: json['title'] as String,
-    type: json['type'] as String,
-    images: (json['images'] as List)?.map((e) => e as String)?.toList(),
+    title: json['title'] as String ?? '',
+    type: json['type'] as String ?? '',
+    images: (json['images'] as List)?.map((e) => e as String)?.toList() ?? [],
   );
 }
 

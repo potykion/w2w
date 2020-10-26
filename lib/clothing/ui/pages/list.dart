@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:w2w/widgets.dart';
+import 'package:w2w/core/ui/widgets/buttons.dart';
 
-class MyHomePage extends StatelessWidget {
+class ClothingListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,34 +23,6 @@ class MyHomePage extends StatelessWidget {
             )
           ],
         ),
-      ),
-    );
-  }
-}
-
-class AddClothingChoicePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            FullWidthButton(text: "Добавить руками"),
-            LamodaButtonWithInput()
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class AddClothingPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text("AddClothingPage"),
       ),
     );
   }

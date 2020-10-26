@@ -17,7 +17,8 @@ class _$ClothingTearOff {
   const _$ClothingTearOff();
 
 // ignore: unused_element
-  _Clothing call({String title, String type, List<String> images}) {
+  _Clothing call(
+      {String title = "", String type = "", List<String> images = const []}) {
     return _Clothing(
       title: title,
       type: type,
@@ -109,15 +110,21 @@ class __$ClothingCopyWithImpl<$Res> extends _$ClothingCopyWithImpl<$Res>
 
 /// @nodoc
 class _$_Clothing implements _Clothing {
-  _$_Clothing({this.title, this.type, this.images});
+  _$_Clothing({this.title = "", this.type = "", this.images = const []})
+      : assert(title != null),
+        assert(type != null),
+        assert(images != null);
 
   factory _$_Clothing.fromJson(Map<String, dynamic> json) =>
       _$_$_ClothingFromJson(json);
 
+  @JsonKey(defaultValue: "")
   @override
   final String title;
+  @JsonKey(defaultValue: "")
   @override
   final String type;
+  @JsonKey(defaultValue: const [])
   @override
   final List<String> images;
 

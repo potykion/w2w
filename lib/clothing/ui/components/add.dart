@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:w2w/clothing/dependencies/api_clients.dart';
+import 'package:get/get.dart';
 import 'package:w2w/clothing/domain/use_cases.dart';
 import 'package:w2w/core/ui/components/buttons.dart';
 
@@ -39,8 +39,7 @@ class _LamodaLinkInputState extends State<LamodaLinkInput> {
           showProgress = true;
         });
 
-        var clothing =
-            await LoadLamodaClothing(FakeLamodaParseApiClient())(lamodaLink);
+        var clothing = await Get.find<LoadLamodaClothing>()(lamodaLink);
 
         setState(() {
           showSubmitIcon = true;

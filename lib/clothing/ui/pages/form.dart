@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:w2w/clothing/domain/models.dart';
 import 'package:w2w/clothing/ui/components/form.dart';
 import 'package:w2w/core/ui/components/buttons.dart';
@@ -56,7 +58,13 @@ class _ClothingFormPageState extends State<ClothingFormPage> {
                   setState(() => clothing = clothing.copyWith(images: images)),
             ),
           ),
-          FullWidthButton(text: "Сохранить"),
+          FullWidthButton(
+            text: "Сохранить",
+            onPressed: () {
+              Get.find<Box>().add(clothing.toJson());
+              Get.toNamed("/clothing-list");
+            },
+          ),
         ],
       ),
     );

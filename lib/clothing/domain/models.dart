@@ -13,6 +13,6 @@ abstract class Clothing with _$Clothing {
     @Default(const []) List<String> images,
   }) = _Clothing;
 
-  factory Clothing.fromJson(Map<String, dynamic> json) =>
+  factory Clothing.fromJson(Map json) =>
       _$ClothingFromJson(json);
 }

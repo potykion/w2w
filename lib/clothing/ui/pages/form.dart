@@ -61,7 +61,7 @@ class _ClothingFormPageState extends State<ClothingFormPage> {
           FullWidthButton(
             text: "Сохранить",
             onPressed: () {
-              Get.find<Box>().add(clothing.toJson());
+              Get.find(tag: "clothingBox").add(clothing.toJson());
               Get.toNamed("/clothing-list");
             },
           ),

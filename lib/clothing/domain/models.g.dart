@@ -6,7 +6,7 @@ part of 'models.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Clothing _$_$_ClothingFromJson(Map<String, dynamic> json) {
+_$_Clothing _$_$_ClothingFromJson(Map json) {
   return _$_Clothing(
     title: json['title'] as String ?? '',
     type: json['type'] as String ?? '',

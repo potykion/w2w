@@ -13,6 +13,9 @@ import 'clothing/ui/pages/list.dart';
 
 void main() async {
   await Hive.initFlutter();
+
+  await Get.putAsync(() => Hive.openBox("clothing"), tag: "clothingBox");
+
   runApp(MyApp());
 }
 
@@ -22,12 +25,11 @@ class MyApp extends StatelessWidget {
         theme: theme,
         getPages: [
           GetPage(
-            name: "/clothing-list",
-            page: () => ClothingListPage(),
-            binding: BindingsBuilder(() {
-              Get.put(ClothingListController(Get.find(tag: "clothingBox")));
-            })
-          ),
+              name: "/clothing-list",
+              page: () => ClothingListPage(),
+              binding: BindingsBuilder(() {
+                Get.put(ClothingListController(Get.find(tag: "clothingBox")));
+              })),
           GetPage(
             name: "/add-clothing-choice",
             page: () => AddClothingChoicePage(),
@@ -39,7 +41,6 @@ class MyApp extends StatelessWidget {
           Get.put<LamodaParseApiClient>(FakeLamodaParseApiClient());
           Get.create(
               () => LoadLamodaClothing(Get.find<LamodaParseApiClient>()));
-          Get.putAsync(() async => await Hive.openBox("clothing"), tag: "clothingBox");
         }),
       );
 }

@@ -12,7 +12,7 @@ class ClothingListController extends GetxController {
   @override
   void onInit() {
 
-    clothing = clothingBox.values.map((json) => Clothing.fromJson(json)).toList();
+    clothing.value = clothingBox.values.map((json) => Clothing.fromJson(Map<String, dynamic>.from(json))).toList();
 
     super.onInit();
   }

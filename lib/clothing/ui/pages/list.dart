@@ -13,6 +13,7 @@ class ClothingListPage extends GetView<ClothingListController> {
               itemBuilder: (context, index) => ListTile(
                 title: Text(controller.clothing[index].title),
               ),
+              itemCount: controller.clothing.length,
             ),
     );
   }

@@ -14,7 +14,7 @@ import 'clothing/ui/pages/list.dart';
 void main() async {
   await Hive.initFlutter();
 
-  await Get.putAsync(() => Hive.openBox("clothing"), tag: "clothingBox");
+  await Get.putAsync<Box>(() => Hive.openBox("clothing"), tag: "clothingBox");
 
   runApp(MyApp());
 }

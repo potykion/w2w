@@ -5,6 +5,7 @@ import 'package:hive/hive.dart';
 import 'package:w2w/clothing/domain/models.dart';
 import 'package:w2w/clothing/ui/components/form.dart';
 import 'package:w2w/core/ui/components/buttons.dart';
+import 'package:w2w/clothing/state/controllers.dart';
 
 class ClothingFormPage extends StatefulWidget {
   @override
@@ -61,7 +62,8 @@ class _ClothingFormPageState extends State<ClothingFormPage> {
           FullWidthButton(
             text: "Сохранить",
             onPressed: () {
-              Get.find(tag: "clothingBox").add(clothing.toJson());
+              Get.find<Box>(tag: "clothingBox").add(clothing.toJson());
+              Get.find<ClothingListController>().clothingList.add(clothing);
               Get.toNamed("/clothing-list");
             },
           ),

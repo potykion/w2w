@@ -14,5 +14,5 @@ abstract class Clothing with _$Clothing {
   }) = _Clothing;
 
   factory Clothing.fromJson(Map json) =>
-      _$ClothingFromJson(json);
+      _$ClothingFromJson(Map<String, dynamic>.from(json));
 }

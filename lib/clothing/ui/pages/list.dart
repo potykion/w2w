@@ -7,13 +7,13 @@ class ClothingListPage extends GetView<ClothingListController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: controller.clothing.length == 0
+      body: controller.clothingList.length == 0
           ? buildNoClothing(context)
           : ListView.builder(
               itemBuilder: (context, index) => ListTile(
-                title: Text(controller.clothing[index].title),
+                title: Text(controller.clothingList[index].title),
               ),
-              itemCount: controller.clothing.length,
+              itemCount: controller.clothingList.length,
             ),
     );
   }
@@ -30,10 +30,7 @@ class ClothingListPage extends GetView<ClothingListController> {
           ),
           FullWidthButton(
             text: "Добавить",
-            onPressed: () => Navigator.pushNamed(
-              context,
-              "/add-clothing-choice",
-            ),
+            onPressed: () => Get.toNamed("/add-clothing-choice"),
           )
         ],
       ),

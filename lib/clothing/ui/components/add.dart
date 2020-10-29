@@ -46,7 +46,7 @@ class _LamodaLinkInputState extends State<LamodaLinkInput> {
           showProgress = false;
         });
 
-        Navigator.pushNamed(context, "/clothing-form", arguments: clothing);
+        Get.toNamed("/clothing-form", arguments: clothing);
       },
     );
 

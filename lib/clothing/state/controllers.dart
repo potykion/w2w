@@ -5,14 +5,14 @@ import 'package:w2w/clothing/domain/models.dart';
 class ClothingListController extends GetxController {
   final Box clothingBox;
 
-  RxList<Clothing> clothing = List<Clothing>().obs;
+  RxList<Clothing> clothingList = List<Clothing>().obs;
 
   ClothingListController(this.clothingBox);
 
   @override
   void onInit() {
-
-    clothing.value = clothingBox.values.map((json) => Clothing.fromJson(Map<String, dynamic>.from(json))).toList();
+    clothingList.value =
+        clothingBox.values.map((json) => Clothing.fromJson(json)).toList();
 
     super.onInit();
   }

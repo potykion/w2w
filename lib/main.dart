@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:w2w/clothing/dependencies/repositories.dart';
 import 'package:w2w/theme.dart';
 
 import 'clothing/dependencies/api_clients.dart';
@@ -28,7 +29,8 @@ class MyApp extends StatelessWidget {
               name: "/clothing-list",
               page: () => ClothingListPage(),
               binding: BindingsBuilder(() {
-                Get.put(ClothingListController(Get.find(tag: "clothingBox")));
+                Get.put(ClothingRepo(Get.find(tag: "clothingBox")));
+                Get.put(ClothingListController(Get.find<ClothingRepo>()));
               })),
           GetPage(
             name: "/add-clothing-choice",

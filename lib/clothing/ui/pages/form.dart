@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
 import 'package:w2w/clothing/domain/models.dart';
 import 'package:w2w/clothing/ui/components/form.dart';
 import 'package:w2w/core/ui/components/buttons.dart';
 import 'package:w2w/clothing/state/controllers.dart';
+
+import '../../../routes.dart';
 
 class ClothingFormPage extends StatefulWidget {
   @override
@@ -14,12 +15,14 @@ class ClothingFormPage extends StatefulWidget {
 
 class _ClothingFormPageState extends State<ClothingFormPage> {
   Clothing clothing;
+  int clothingId;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    var initialClothing = ModalRoute.of(context).settings.arguments as Clothing;
-    clothing = initialClothing ?? Clothing();
+    var args = Get.arguments as ClothingFormArgs;
+    clothing = args?.clothing ?? Clothing();
+    clothingId = args?.clothingId;
   }
 
   @override
@@ -62,12 +65,24 @@ class _ClothingFormPageState extends State<ClothingFormPage> {
           FullWidthButton(
             text: "Сохранить",
             onPressed: () {
-              Get.find<ClothingListController>().addClothing(clothing);
-              Get.toNamed("/clothing-list");
+              if (clothingId != null) {
+                Get.find<ClothingListController>().updateClothing(clothing, clothingId);
+              } else {
+                Get.find<ClothingListController>().addClothing(clothing);
+              }
+
+              Get.toNamed(Routes.clothingList);
             },
           ),
         ],
       ),
     );
   }
+}
+
+class ClothingFormArgs {
+  final Clothing clothing;
+  final int clothingId;
+
+  ClothingFormArgs({this.clothing, this.clothingId});
 }

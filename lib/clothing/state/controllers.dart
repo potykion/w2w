@@ -24,4 +24,9 @@ class ClothingListController extends GetxController {
     repo.addClothing(clothing);
     clothingList.add(clothing);
   }
+
+  updateClothing(Clothing clothing, int clothingId) {
+    repo.updateClothing(clothing, clothingId);
+    clothingList[clothingId] = clothing;
+  }
 }

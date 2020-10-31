@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:w2w/clothing/domain/use_cases.dart';
+import 'package:w2w/clothing/ui/pages/form.dart';
 import 'package:w2w/core/ui/components/buttons.dart';
+
+import '../../../routes.dart';
 
 class LamodaLinkInput extends StatefulWidget {
   @override
@@ -46,7 +49,10 @@ class _LamodaLinkInputState extends State<LamodaLinkInput> {
           showProgress = false;
         });
 
-        Get.toNamed("/clothing-form", arguments: clothing);
+        Get.toNamed(
+          Routes.clothingForm,
+          arguments: ClothingFormArgs(clothing: clothing),
+        );
       },
     );
 

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:w2w/clothing/dependencies/repositories.dart';
+import 'package:w2w/routes.dart';
 import 'package:w2w/theme.dart';
 
 import 'clothing/dependencies/api_clients.dart';
@@ -26,23 +27,24 @@ class MyApp extends StatelessWidget {
         theme: theme,
         getPages: [
           GetPage(
-              name: "/clothing-list",
+              name: Routes.clothingList,
               page: () => ClothingListPage(),
               binding: BindingsBuilder(() {
                 Get.put(ClothingRepo(Get.find(tag: "clothingBox")));
                 Get.put(ClothingListController(Get.find<ClothingRepo>()));
               })),
           GetPage(
-            name: "/add-clothing-choice",
-            page: () => AddClothingChoicePage(),
+              name: Routes.addClothingChoice,
+              page: () => AddClothingChoicePage(),
+              binding: BindingsBuilder(() {
+                Get.put<LamodaParseApiClient>(FakeLamodaParseApiClient());
+                Get.put<LoadLamodaClothing>(LoadLamodaClothing(Get.find<LamodaParseApiClient>()));
+              })),
+          GetPage(
+            name: Routes.clothingForm,
+            page: () => ClothingFormPage(),
           ),
-          GetPage(name: "/clothing-form", page: () => ClothingFormPage()),
         ],
-        initialRoute: "/clothing-list",
-        initialBinding: BindingsBuilder(() {
-          Get.put<LamodaParseApiClient>(FakeLamodaParseApiClient());
-          Get.create(
-              () => LoadLamodaClothing(Get.find<LamodaParseApiClient>()));
-        }),
+        initialRoute: Routes.clothingList,
       );
 }

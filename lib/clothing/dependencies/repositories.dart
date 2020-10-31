@@ -9,4 +9,7 @@ class ClothingRepo {
   addClothing(Clothing clothing) => box.add(clothing.toJson());
 
   listClothing() => box.values.map((json) => Clothing.fromJson(json)).toList();
+
+  updateClothing(Clothing clothing, int clothingId) =>
+      box.putAt(clothingId, clothing.toJson());
 }

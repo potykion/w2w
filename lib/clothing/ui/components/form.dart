@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:get/get.dart';
+import 'package:w2w/clothing/dependencies/repositories.dart';
 
 const double TEXT_HEIGHT = 1.15;
 const double SPACING = 0;
@@ -34,7 +36,10 @@ class _ClothingTitleInputState extends State<ClothingTitleInput> {
       children: [
         Text(
           "Название",
-          style: Theme.of(context).textTheme.headline6.copyWith(height: TEXT_HEIGHT),
+          style: Theme.of(context)
+              .textTheme
+              .headline6
+              .copyWith(height: TEXT_HEIGHT),
         ),
         SizedBox(height: SPACING),
         TextFormField(
@@ -76,7 +81,10 @@ class _ClothingTypeInputState extends State<ClothingTypeInput> {
       children: [
         Text(
           "Тип",
-          style: Theme.of(context).textTheme.headline6.copyWith(height: TEXT_HEIGHT),
+          style: Theme.of(context)
+              .textTheme
+              .headline6
+              .copyWith(height: TEXT_HEIGHT),
         ),
         SizedBox(height: SPACING),
         TypeAheadFormField<String>(
@@ -86,8 +94,11 @@ class _ClothingTypeInputState extends State<ClothingTypeInput> {
               border: OutlineInputBorder(),
             ),
           ),
-          // todo поиск в бд типов шмота
-          suggestionsCallback: (String pattern) => [],
+          hideOnEmpty: true,
+          hideOnLoading: true,
+          hideSuggestionsOnKeyboardHide: false,
+          suggestionsCallback: (String pattern) =>
+              Get.find<ClothingRepo>().findTypeByPattern(pattern),
           onSuggestionSelected: (String suggestion) => tec.text = suggestion,
           itemBuilder: (BuildContext context, String itemData) =>
               ListTile(title: Text(itemData)),
@@ -126,7 +137,10 @@ class _ClothingColorInputState extends State<ClothingColorInput> {
       children: [
         Text(
           "Цвет",
-          style: Theme.of(context).textTheme.headline6.copyWith(height: TEXT_HEIGHT),
+          style: Theme.of(context)
+              .textTheme
+              .headline6
+              .copyWith(height: TEXT_HEIGHT),
         ),
         SizedBox(height: SPACING),
         TextFormField(
@@ -169,7 +183,10 @@ class _ClothingImagesInputState extends State<ClothingImagesInput> {
       children: [
         Text(
           "Фоточки",
-          style: Theme.of(context).textTheme.headline6.copyWith(height: TEXT_HEIGHT),
+          style: Theme.of(context)
+              .textTheme
+              .headline6
+              .copyWith(height: TEXT_HEIGHT),
         ),
         SizedBox(height: SPACING),
         SizedBox(

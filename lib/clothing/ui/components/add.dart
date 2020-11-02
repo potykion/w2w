@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:w2w/clothing/domain/use_cases.dart';
 import 'package:w2w/clothing/ui/pages/form.dart';
-import 'package:w2w/core/ui/components/buttons.dart';
+import 'package:w2w/core/ui/components/components.dart';
 
 import '../../../routes.dart';
 

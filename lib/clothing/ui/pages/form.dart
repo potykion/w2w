@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:w2w/clothing/domain/models.dart';
-import 'package:w2w/clothing/ui/components/form.dart';
-import 'package:w2w/core/ui/components/buttons.dart';
-import 'package:w2w/clothing/state/controllers.dart';
-
+import '../../domain/models.dart';
+import '../components/form.dart';
+import '../../../core/ui/components/components.dart';
+import '../../state/controllers.dart';
 import '../../../routes.dart';
 
 class ClothingFormPage extends StatefulWidget {
@@ -27,46 +26,44 @@ class _ClothingFormPageState extends State<ClothingFormPage> {
 
   @override
   Widget build(BuildContext context) {
+    var inputs = <Widget>[
+      WithHeadlineText(
+        text: "Название",
+        child: TextInput(
+          initial: clothing.title,
+          change: (title) =>
+              setState(() => clothing = clothing.copyWith(title: title)),
+        ),
+      ),
+      ClothingTypeInput(
+        initial: clothing.type,
+        change: (type) =>
+            setState(() => clothing = clothing.copyWith(type: type)),
+      ),
+      ClothingColorInput(
+        initial: clothing.color,
+        change: (color) =>
+            setState(() => clothing = clothing.copyWith(color: color)),
+      ),
+      ClothingImagesInput(
+        initial: clothing.images,
+        change: (images) =>
+            setState(() => clothing = clothing.copyWith(images: images)),
+      )
+    ];
+
+    var inputsWithPadding = inputs.map((w) => FixedPadding(child: w));
+
     return Scaffold(
       body: ListView(
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-            child: ClothingTitleInput(
-              initial: clothing.title,
-              change: (title) =>
-                  setState(() => clothing = clothing.copyWith(title: title)),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-            child: ClothingTypeInput(
-              initial: clothing.type,
-              change: (type) =>
-                  setState(() => clothing = clothing.copyWith(type: type)),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-            child: ClothingColorInput(
-              initial: clothing.color,
-              change: (color) =>
-                  setState(() => clothing = clothing.copyWith(color: color)),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-            child: ClothingImagesInput(
-              initial: clothing.images,
-              change: (images) =>
-                  setState(() => clothing = clothing.copyWith(images: images)),
-            ),
-          ),
+          ...inputsWithPadding,
           FullWidthButton(
             text: "Сохранить",
             onPressed: () {
               if (clothingId != null) {
-                Get.find<ClothingListController>().updateClothing(clothing, clothingId);
+                Get.find<ClothingListController>()
+                    .updateClothing(clothing, clothingId);
               } else {
                 Get.find<ClothingListController>().addClothing(clothing);
               }

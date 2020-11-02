@@ -52,22 +52,34 @@ class FullWidthButton extends StatelessWidget {
 class WithHeadlineText extends StatelessWidget {
   final String text;
   final Widget child;
+  final Widget trailing;
+  final bool withPadding;
 
-  const WithHeadlineText({Key key, this.text, this.child}) : super(key: key);
+  const WithHeadlineText(
+      {Key key, this.text, this.child, this.trailing, this.withPadding = false})
+      : super(key: key);
 
   @override
-  Widget build(BuildContext context) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(text, style: Theme.of(context).textTheme.headline6
-              // const double TEXT_HEIGHT = 1.15;
-              // .copyWith(height: TEXT_HEIGHT),
-              ),
-          // const double SPACING = 0;
-          // SizedBox(height: SPACING),
-          child,
-        ],
+  Widget build(BuildContext context) {
+    Widget textRow = Row(
+      children: [
+        Text(text, style: Theme.of(context).textTheme.headline6),
+        Spacer(),
+        trailing ?? Container()
+      ],
+    );
+
+    if (withPadding) {
+      textRow = FixedPadding(
+        child: textRow,
       );
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [textRow, child],
+    );
+  }
 }
 
 class TextInput extends StatefulWidget {
@@ -100,7 +112,6 @@ class _TextInputState extends State<TextInput> {
     );
   }
 }
-
 
 class FixedPadding extends StatelessWidget {
   final Widget child;

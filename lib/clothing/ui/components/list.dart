@@ -12,9 +12,9 @@ class ClothingListAppBar extends StatelessWidget with PreferredSizeWidget {
       child: Row(
         children: [
           Spacer(),
-          FloatingActionButton(
+          IconButton(
             onPressed: () => Get.toNamed("/add-clothing-choice"),
-            child: Icon(Icons.add, color: Colors.white),
+            icon: Icon(Icons.add),
           )
         ],
       ),

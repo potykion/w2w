@@ -4,8 +4,7 @@ import 'package:get/get.dart';
 import 'package:w2w/clothing/dependencies/repositories.dart';
 import 'package:w2w/core/ui/components/components.dart';
 
-const double TEXT_HEIGHT = 1.15;
-const double SPACING = 0;
+import '../../../routes.dart';
 
 class ClothingTypeInput extends StatefulWidget {
   final String initial;
@@ -121,6 +120,10 @@ class _ClothingImagesInputState extends State<ClothingImagesInput> {
           children:
               images.map((url) => Card(child: Image.network(url))).toList(),
         ),
+      ),
+      trailing: IconButton(
+        icon: Icon(Icons.add),
+        onPressed: () => Get.toNamed(Routes.clothingAddImageChoice),
       ),
     );
   }

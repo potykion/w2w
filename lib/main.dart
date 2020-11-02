@@ -9,6 +9,7 @@ import 'package:w2w/theme.dart';
 import 'clothing/dependencies/api_clients.dart';
 import 'clothing/domain/use_cases.dart';
 import 'clothing/state/controllers.dart';
+import 'clothing/ui/pages/add-image.dart';
 import 'clothing/ui/pages/add.dart';
 import 'clothing/ui/pages/form.dart';
 import 'clothing/ui/pages/list.dart';
@@ -38,12 +39,17 @@ class MyApp extends StatelessWidget {
               page: () => AddClothingChoicePage(),
               binding: BindingsBuilder(() {
                 Get.put<LamodaParseApiClient>(FakeLamodaParseApiClient());
-                Get.put<LoadLamodaClothing>(LoadLamodaClothing(Get.find<LamodaParseApiClient>()));
+                Get.put<LoadLamodaClothing>(
+                    LoadLamodaClothing(Get.find<LamodaParseApiClient>()));
               })),
           GetPage(
             name: Routes.clothingForm,
             page: () => ClothingFormPage(),
           ),
+          GetPage(
+            name: Routes.clothingAddImageChoice,
+            page: () => AddImageChoicePage(),
+          )
         ],
         initialRoute: Routes.clothingList,
       );

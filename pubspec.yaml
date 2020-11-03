@@ -46,6 +46,9 @@ dependencies:
   # групп-бай и все такое
   collection: ^1.14.13
 
+  # выбор файла
+  file_picker: ^2.0.11
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

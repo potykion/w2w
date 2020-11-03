@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:w2w/clothing/ui/components/add-image.dart';
 import 'package:w2w/core/ui/components/components.dart';
 
 class AddImageChoicePage extends StatelessWidget {
@@ -13,7 +14,7 @@ class AddImageChoicePage extends StatelessWidget {
             text: "Добавить фото",
             child: Column(
               children: [
-                FullWidthButton(text: "Из файла"),
+                UploadPhotoViaFileButton(),
                 FullWidthButton(text: "Из камеры"),
                 FullWidthButton(text: "Из интернета"),
               ],

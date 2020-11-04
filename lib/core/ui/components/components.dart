@@ -119,3 +119,90 @@ class FixedPadding extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
       child: child);
 }
+
+class LinkSubmitInput<SubmissionResult> extends StatefulWidget {
+  final Future<SubmissionResult> Function(String link) onSubmit;
+  final Function(SubmissionResult submitResult) postSubmit;
+  final String helperText;
+  final String hintText;
+
+  const LinkSubmitInput({
+    Key key,
+    this.onSubmit,
+    this.postSubmit,
+    this.helperText,
+    this.hintText,
+  }) : super(key: key);
+
+  @override
+  _LinkSubmitInputState createState() => _LinkSubmitInputState();
+}
+
+class _LinkSubmitInputState extends State<LinkSubmitInput> {
+  TextEditingController tec = TextEditingController();
+
+  String link;
+
+  bool showSubmitIcon = false;
+  bool showProgress = false;
+
+  @override
+  void initState() {
+    super.initState();
+    tec.addListener(
+      () => setState(() {
+        if (link != tec.text) {
+          link = tec.text;
+          showSubmitIcon = tec.text.isNotEmpty;
+        }
+      }),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var submitIcon = IconButton(
+      icon: Icon(Icons.arrow_forward),
+      onPressed: () async {
+        FocusScope.of(context).unfocus();
+
+        setState(() {
+          showSubmitIcon = false;
+          showProgress = true;
+        });
+
+        var res = await widget.onSubmit(link);
+
+        setState(() {
+          showSubmitIcon = true;
+          showProgress = false;
+        });
+
+        widget.postSubmit(res);
+      },
+    );
+
+    var progress = Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: CircularProgressIndicator(),
+    );
+
+    return FixedPadding(
+      child: TextFormField(
+        controller: tec,
+        readOnly: showProgress,
+        decoration: InputDecoration(
+          helperText: widget.helperText,
+          hintText: widget.hintText,
+          border: OutlineInputBorder(),
+          focusColor: Theme.of(context).primaryColor,
+          suffixIcon: showSubmitIcon
+              ? submitIcon
+              : showProgress
+                  ? progress
+                  : null,
+        ),
+      ),
+    );
+  }
+}

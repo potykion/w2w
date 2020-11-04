@@ -8,10 +8,11 @@ final ThemeData theme = ThemeData(
   cursorColor: Color(0xff2ec4b6),
   textSelectionHandleColor: Color(0xff2ec4b6),
   textTheme: TextTheme(
-      headline4: TextStyle(
-        fontWeight: FontWeight.bold,
-        fontSize: 30,
-        color: Color(0xff12130f),
-      ),
-      button: TextStyle(fontSize: 16, fontWeight: FontWeight.w400)),
+    headline4: TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: 30,
+      color: Color(0xff12130f),
+    ),
+    button: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+  ),
 );

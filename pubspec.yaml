@@ -49,6 +49,13 @@ dependencies:
   # выбор файла
   file_picker: ^2.0.11
 
+  # работа с камерой
+  camera: ^0.5.8+11
+
+  # работа с путями
+  path_provider:
+  path:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

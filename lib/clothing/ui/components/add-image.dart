@@ -1,7 +1,10 @@
 import 'dart:io';
 
+import 'package:camera/camera.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:w2w/clothing/ui/pages/add-image.dart';
 import 'package:w2w/core/ui/components/components.dart';
 
 class UploadPhotoViaFileButton extends StatelessWidget {
@@ -16,6 +19,24 @@ class UploadPhotoViaFileButton extends StatelessWidget {
 
           var s = "as";
         }
+      },
+    );
+  }
+}
+
+class UploadPhotoViaCameraButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return FullWidthButton(
+      text: "Из камеры",
+      onPressed: () async {
+        // Obtain a list of the available cameras on the device.
+        final cameras = await availableCameras();
+
+        // Get a specific camera from the list of available cameras.
+        final firstCamera = cameras.first;
+
+        Get.to(TakePictureScreen(camera: firstCamera));
       },
     );
   }

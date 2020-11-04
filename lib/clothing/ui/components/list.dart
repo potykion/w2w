@@ -6,8 +6,7 @@ import 'package:w2w/routes.dart';
 
 class ClothingListAppBar extends StatelessWidget with PreferredSizeWidget {
   @override
-  Widget build(BuildContext context) {
-    return Padding(
+  Widget build(BuildContext context) => Padding(
       padding: EdgeInsets.only(top: Get.mediaQuery.padding.top + 8, right: 8),
       child: Row(
         children: [
@@ -19,7 +18,6 @@ class ClothingListAppBar extends StatelessWidget with PreferredSizeWidget {
         ],
       ),
     );
-  }
 
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);

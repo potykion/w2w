@@ -92,18 +92,15 @@ class _LamodaButtonWithInputState extends State<LamodaButtonWithInput> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> children = [
-      FullWidthButton(
-        text: "Добавить через Lamoda",
-        leading: Image.asset("assets/lamoda.png"),
-        onPressed: () => setState(() => showInput = true),
-      ),
-    ];
-
-    if (showInput) {
-      children.add(LamodaLinkInput());
-    }
-
-    return Column(children: children);
+    return Column(
+      children: [
+        FullWidthButton(
+          text: "Добавить через Lamoda",
+          leading: Image.asset("assets/lamoda.png"),
+          onPressed: () => setState(() => showInput = true),
+        ),
+        if (showInput) LamodaLinkInput()
+      ],
+    );
   }
 }

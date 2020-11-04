@@ -65,15 +65,11 @@ class WithHeadlineText extends StatelessWidget {
       children: [
         Text(text, style: Theme.of(context).textTheme.headline6),
         Spacer(),
-        trailing ?? Container()
+        if (trailing != null) trailing
       ],
     );
 
-    if (withPadding) {
-      textRow = FixedPadding(
-        child: textRow,
-      );
-    }
+    textRow = withPadding ? FixedPadding(child: textRow) : textRow;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

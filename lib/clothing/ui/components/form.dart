@@ -28,8 +28,7 @@ class _ClothingTypeInputState extends State<ClothingTypeInput> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return WithHeadlineText(
+  Widget build(BuildContext context) => WithHeadlineText(
       text: "Тип",
       child: TypeAheadFormField<String>(
         textFieldConfiguration: TextFieldConfiguration(
@@ -48,7 +47,6 @@ class _ClothingTypeInputState extends State<ClothingTypeInput> {
             ListTile(title: Text(itemData)),
       ),
     );
-  }
 }
 
 class ClothingColorInput extends StatefulWidget {
@@ -74,8 +72,7 @@ class _ClothingColorInputState extends State<ClothingColorInput> {
 
   // todo колор-пикер
   @override
-  Widget build(BuildContext context) {
-    return WithHeadlineText(
+  Widget build(BuildContext context) => WithHeadlineText(
       text: "Цвет",
       child: TextFormField(
         controller: tec,
@@ -84,7 +81,6 @@ class _ClothingColorInputState extends State<ClothingColorInput> {
         ),
       ),
     );
-  }
 }
 
 class ClothingImagesInput extends StatefulWidget {
@@ -110,8 +106,7 @@ class _ClothingImagesInputState extends State<ClothingImagesInput> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return WithHeadlineText(
+  Widget build(BuildContext context) => WithHeadlineText(
       text: "Фоточки",
       child: SizedBox(
         height: 300,
@@ -126,5 +121,4 @@ class _ClothingImagesInputState extends State<ClothingImagesInput> {
         onPressed: () => Get.toNamed(Routes.clothingAddImageChoice),
       ),
     );
-  }
 }

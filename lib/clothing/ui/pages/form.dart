@@ -52,12 +52,10 @@ class _ClothingFormPageState extends State<ClothingFormPage> {
       )
     ];
 
-    var inputsWithPadding = inputs.map((w) => FixedPadding(child: w));
-
     return Scaffold(
       body: ListView(
         children: [
-          ...inputsWithPadding,
+          for (var input in inputs) FixedPadding(child: input),
           FullWidthButton(
             text: "Сохранить",
             onPressed: () {

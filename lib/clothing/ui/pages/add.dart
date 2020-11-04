@@ -6,8 +6,7 @@ import 'package:w2w/routes.dart';
 
 class AddClothingChoicePage extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+  Widget build(BuildContext context) => Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -21,5 +20,4 @@ class AddClothingChoicePage extends StatelessWidget {
         ),
       ),
     );
-  }
 }

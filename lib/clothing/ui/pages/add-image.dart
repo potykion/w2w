@@ -20,7 +20,7 @@ class AddImageChoicePage extends StatelessWidget {
               children: [
                 UploadPhotoViaFileButton(),
                 UploadPhotoViaCameraButton(),
-                FullWidthButton(text: "Из интернета"),
+                UploadPhotoViaLinkButtonAndInput(),
               ],
             ),
           ),

@@ -41,3 +41,30 @@ class UploadPhotoViaCameraButton extends StatelessWidget {
     );
   }
 }
+
+class UploadPhotoViaLinkButtonAndInput extends StatefulWidget {
+  @override
+  _UploadPhotoViaLinkButtonAndInputState createState() =>
+      _UploadPhotoViaLinkButtonAndInputState();
+}
+
+class _UploadPhotoViaLinkButtonAndInputState
+    extends State<UploadPhotoViaLinkButtonAndInput> {
+  var showInput = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        FullWidthButton(
+          text: "По ссылке",
+          onPressed: () => setState(() => showInput = true),
+        ),
+        if (showInput)
+          LinkSubmitInput(
+            hintText: "Ссылка на фотку со шмоткой",
+          )
+      ],
+    );
+  }
+}

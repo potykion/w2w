@@ -26,6 +26,9 @@ dependencies:
 
   # http-запосы
   http: ^0.12.2
+  dio: ^3.0.10
+  retrofit: any
+  logger: any
 
   # дата-классы
   freezed_annotation:
@@ -68,6 +71,9 @@ dev_dependencies:
 
   # кодогенерация персистенса
   hive_generator: ^0.8.1
+
+  # кодогенерация http клиента
+  retrofit_generator: any
 
 
 # For information on the generic Dart part of this file, see the

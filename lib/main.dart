@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
@@ -33,6 +34,9 @@ class MyApp extends StatelessWidget {
               binding: BindingsBuilder(() {
                 Get.put(ClothingRepo(Get.find(tag: "clothingBox")));
                 Get.put(ClothingListController(Get.find<ClothingRepo>()));
+
+                Get.put(Dio());
+                Get.put(RestClient(Get.find<Dio>()));
               })),
           GetPage(
               name: Routes.addClothingChoice,

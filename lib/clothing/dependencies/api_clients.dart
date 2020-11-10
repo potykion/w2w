@@ -1,7 +1,13 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
+import 'package:retrofit/http.dart';
+import 'package:w2w/core/state/view_models.dart';
 import '../domain/models.dart';
+
+part 'api_clients.g.dart';
 
 class LamodaParseApiClient {
   Future<Clothing> call(String lamodaLink) async {
@@ -36,4 +42,18 @@ class FakeLamodaParseApiClient implements LamodaParseApiClient {
       ],
     );
   }
+}
+
+@RestApi(baseUrl: "http://84.201.135.199:8098/")
+abstract class RestClient {
+  factory RestClient(Dio dio, {String baseUrl}) = _RestClient;
+
+  @GET("/parse")
+  Future<Clothing> parseLamodaClothing(@Query("url") String url);
+
+  @POST("/upload_image_via_file")
+  Future<UrlDto> uploadImageViaFile(@Part() File image);
+
+  @POST("/upload_image_via_link")
+  Future<UrlDto> uploadImageViaLink(@Body() UrlDto dto);
 }

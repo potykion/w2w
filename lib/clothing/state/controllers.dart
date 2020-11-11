@@ -30,3 +30,23 @@ class ClothingListController extends GetxController {
     clothingList[clothingId] = clothing;
   }
 }
+
+class ClothingFormController extends GetxController {
+  static int unsetIndex = -1;
+
+  Rx<Clothing> clothing = Clothing().obs;
+  RxInt clothingId = unsetIndex.obs;
+
+  setClothing(Clothing clothing) {
+    this.clothing.value = clothing;
+  }
+
+  setClothingId(int clothingId) {
+    this.clothingId.value = clothingId;
+  }
+
+  reset() {
+    this.clothing.value = Clothing();
+    this.clothingId.value = unsetIndex;
+  }
+}

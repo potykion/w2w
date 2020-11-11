@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:w2w/clothing/domain/models.dart';
 import 'package:w2w/clothing/domain/use_cases.dart';
-import 'package:w2w/clothing/ui/pages/form.dart';
 import 'package:w2w/core/ui/components/components.dart';
 
 import '../../../routes.dart';
@@ -34,10 +33,7 @@ class LamodaLinkInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) => LinkSubmitInput<Clothing>(
         onSubmit: (link) async => await Get.find<LoadLamodaClothing>()(link),
-        postSubmit: (clothing) => Get.toNamed(
-          Routes.clothingForm,
-          arguments: ClothingFormArgs(clothing: clothing),
-        ),
+        postSubmit: (clothing) => Get.toNamed(Routes.clothingForm),
         helperText: "Например, https://lamoda.ru/p/he002emklgv2",
         hintText: "Ссылка на шмотку с Lamoda",
       );

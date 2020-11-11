@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:w2w/clothing/domain/models.dart';
-import 'package:w2w/clothing/ui/pages/form.dart';
+import 'package:w2w/clothing/state/controllers.dart';
 import 'package:w2w/routes.dart';
 
 class ClothingListAppBar extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) => Padding(
-      padding: EdgeInsets.only(top: Get.mediaQuery.padding.top + 8, right: 8),
-      child: Row(
-        children: [
-          Spacer(),
-          IconButton(
-            onPressed: () => Get.toNamed("/add-clothing-choice"),
-            icon: Icon(Icons.add),
-          )
-        ],
-      ),
-    );
+        padding: EdgeInsets.only(top: Get.mediaQuery.padding.top + 8, right: 8),
+        child: Row(
+          children: [
+            Spacer(),
+            IconButton(
+              onPressed: () => Get.toNamed("/add-clothing-choice"),
+              icon: Icon(Icons.add),
+            )
+          ],
+        ),
+      );
 
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
@@ -54,13 +54,12 @@ class TypeClothingList extends StatelessWidget {
                   ],
                 ),
               ),
-              onTap: () => Get.toNamed(
-                Routes.clothingForm,
-                arguments: ClothingFormArgs(
-                  clothing: clothingList[index],
-                  clothingId: index,
-                ),
-              ),
+              onTap: () {
+                var controller = Get.find<ClothingFormController>();
+                controller.setClothing(clothingList[index]);
+                controller.setClothingId(index);
+                return Get.toNamed(Routes.clothingForm);
+              },
             ),
           ),
           itemCount: clothingList.length,

@@ -122,7 +122,10 @@ class FixedPadding extends StatelessWidget {
 
 class LinkSubmitInput<SubmissionResult> extends StatefulWidget {
   final Future<SubmissionResult> Function(String link) onSubmit;
-  final void Function(SubmissionResult submitResult) postSubmit;
+
+  /// На самом деле это void Function(SubmissionResult submissionResult)
+  /// Ток чет оно не робит
+  final Function postSubmit;
   final String helperText;
   final String hintText;
 
@@ -178,7 +181,6 @@ class _LinkSubmitInputState extends State<LinkSubmitInput> {
           showProgress = false;
         });
 
-        // fixme type '(Clothing) => Future<dynamic>' is not a subtype of type '(dynamic) => void'
         widget.postSubmit(res);
       },
     );

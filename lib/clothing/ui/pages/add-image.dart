@@ -1,6 +1,8 @@
+import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:w2w/clothing/ui/components/add-image.dart';
@@ -113,8 +115,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             // Attempt to take a picture and log where it's been saved.
             await _controller.takePicture(path);
 
-            // результат Image.file(File(path))
-
+            Get.back(result: File(path));
           } catch (e) {
             // If an error occurs, log the error to the console.
             print(e);

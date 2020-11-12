@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get/get.dart';
 import 'package:w2w/clothing/dependencies/repositories.dart';
+import 'package:w2w/clothing/state/controllers.dart';
 import 'package:w2w/core/ui/components/components.dart';
 
 import '../../../routes.dart';
@@ -29,24 +30,24 @@ class _ClothingTypeInputState extends State<ClothingTypeInput> {
 
   @override
   Widget build(BuildContext context) => WithHeadlineText(
-      text: "Тип",
-      child: TypeAheadFormField<String>(
-        textFieldConfiguration: TextFieldConfiguration(
-          controller: tec,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
+        text: "Тип",
+        child: TypeAheadFormField<String>(
+          textFieldConfiguration: TextFieldConfiguration(
+            controller: tec,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+            ),
           ),
+          hideOnEmpty: true,
+          hideOnLoading: true,
+          hideSuggestionsOnKeyboardHide: false,
+          suggestionsCallback: (String pattern) =>
+              Get.find<ClothingRepo>().findTypeByPattern(pattern),
+          onSuggestionSelected: (String suggestion) => tec.text = suggestion,
+          itemBuilder: (BuildContext context, String itemData) =>
+              ListTile(title: Text(itemData)),
         ),
-        hideOnEmpty: true,
-        hideOnLoading: true,
-        hideSuggestionsOnKeyboardHide: false,
-        suggestionsCallback: (String pattern) =>
-            Get.find<ClothingRepo>().findTypeByPattern(pattern),
-        onSuggestionSelected: (String suggestion) => tec.text = suggestion,
-        itemBuilder: (BuildContext context, String itemData) =>
-            ListTile(title: Text(itemData)),
-      ),
-    );
+      );
 }
 
 class ClothingColorInput extends StatefulWidget {
@@ -73,14 +74,14 @@ class _ClothingColorInputState extends State<ClothingColorInput> {
   // todo колор-пикер
   @override
   Widget build(BuildContext context) => WithHeadlineText(
-      text: "Цвет",
-      child: TextFormField(
-        controller: tec,
-        decoration: InputDecoration(
-          border: OutlineInputBorder(),
+        text: "Цвет",
+        child: TextFormField(
+          controller: tec,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+          ),
         ),
-      ),
-    );
+      );
 }
 
 class ClothingImagesInput extends StatefulWidget {
@@ -97,7 +98,7 @@ class ClothingImagesInput extends StatefulWidget {
 }
 
 class _ClothingImagesInputState extends State<ClothingImagesInput> {
-  List<String> images;
+  List<dynamic> images;
 
   @override
   void initState() {
@@ -107,18 +108,28 @@ class _ClothingImagesInputState extends State<ClothingImagesInput> {
 
   @override
   Widget build(BuildContext context) => WithHeadlineText(
-      text: "Фоточки",
-      child: SizedBox(
-        height: 300,
-        child: ListView(
-          scrollDirection: Axis.horizontal,
-          children:
-              images.map((url) => Card(child: Image.network(url))).toList(),
+        text: "Фоточки",
+        child: SizedBox(
+          height: 300,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: [
+              for (var image in images)
+                Card(
+                  child: image is String
+                      ? Image.network(image)
+                      : Image.file(image),
+                )
+            ],
+          ),
         ),
-      ),
-      trailing: IconButton(
-        icon: Icon(Icons.add),
-        onPressed: () => Get.toNamed(Routes.clothingAddImageChoice),
-      ),
-    );
+        trailing: IconButton(
+          icon: Icon(Icons.add),
+          onPressed: () async {
+            var image = await Get.toNamed(Routes.clothingAddImageChoice);
+            setState(() => images = [...images, image]);
+            // todo widget.change(images);
+          },
+        ),
+      );
 }

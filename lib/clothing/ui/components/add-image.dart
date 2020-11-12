@@ -5,6 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:w2w/clothing/dependencies/api_clients.dart';
+import 'package:w2w/clothing/state/controllers.dart';
 import 'package:w2w/clothing/ui/pages/add-image.dart';
 import 'package:w2w/core/ui/components/components.dart';
 
@@ -16,9 +17,8 @@ class UploadPhotoViaFileButton extends StatelessWidget {
       onPressed: () async {
         var result = await FilePicker.platform.pickFiles(type: FileType.image);
         if (result != null) {
-          var image = File(result.files.single.path);
-          var urlDto = await Get.find<RestClient>().uploadImageViaFile(image);
-          var s = "As";
+          var imageFile = File(result.files.single.path);
+          Get.back(result: imageFile);
         }
       },
     );
@@ -31,13 +31,10 @@ class UploadPhotoViaCameraButton extends StatelessWidget {
     return FullWidthButton(
       text: "Из камеры",
       onPressed: () async {
-        // Obtain a list of the available cameras on the device.
         final cameras = await availableCameras();
-
-        // Get a specific camera from the list of available cameras.
         final firstCamera = cameras.first;
-
-        Get.to(TakePictureScreen(camera: firstCamera));
+        var imageFile = await Get.to(TakePictureScreen(camera: firstCamera));
+        Get.back(result: imageFile);
       },
     );
   }
@@ -64,6 +61,7 @@ class _UploadPhotoViaLinkButtonAndInputState
         if (showInput)
           LinkSubmitInput(
             hintText: "Ссылка на фотку со шмоткой",
+            onSubmit: (imageUrl) async => Get.back(result: imageUrl),
           )
       ],
     );

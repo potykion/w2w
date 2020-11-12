@@ -181,7 +181,9 @@ class _LinkSubmitInputState extends State<LinkSubmitInput> {
           showProgress = false;
         });
 
-        widget.postSubmit(res);
+        if (widget.postSubmit != null) {
+          widget.postSubmit(res);
+        }
       },
     );
 

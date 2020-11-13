@@ -7,6 +7,20 @@ import 'package:w2w/core/ui/components/components.dart';
 
 import '../../../routes.dart';
 
+class ClothingTitleInput extends StatelessWidget {
+  final String initial;
+  final Function(String title) change;
+
+  const ClothingTitleInput({Key key, this.initial, this.change})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) => WithHeadlineText(
+        text: "Название",
+        child: TextInput(initial: initial, change: change),
+      );
+}
+
 class ClothingTypeInput extends StatefulWidget {
   final String initial;
   final Function(String type) change;

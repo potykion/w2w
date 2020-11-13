@@ -20,7 +20,7 @@ class _$ClothingTearOff {
   _Clothing call(
       {String title = "",
       String type = "",
-      String color = "#ffffff",
+      String color = "ffffff",
       List<String> images = const []}) {
     return _Clothing(
       title: title,
@@ -122,7 +122,7 @@ class _$_Clothing implements _Clothing {
   _$_Clothing(
       {this.title = "",
       this.type = "",
-      this.color = "#ffffff",
+      this.color = "ffffff",
       this.images = const []})
       : assert(title != null),
         assert(type != null),
@@ -138,7 +138,7 @@ class _$_Clothing implements _Clothing {
   @JsonKey(defaultValue: "")
   @override
   final String type;
-  @JsonKey(defaultValue: "#ffffff")
+  @JsonKey(defaultValue: "ffffff")
   @override
   final String color;
   @JsonKey(defaultValue: const [])

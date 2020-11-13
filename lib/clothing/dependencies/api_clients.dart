@@ -56,4 +56,23 @@ abstract class RestClient {
 
   @POST("/upload_image_via_link")
   Future<UrlDto> uploadImageViaLink(@Body() UrlDto dto);
+
+  @POST("/clothing/create")
+  Future<Clothing> createClothing(
+    @Part() String title,
+    @Part() String type,
+    @Part() String color,
+    @Part() List<String> imageUrls,
+    @Part() List<File> imageFiles,
+  );
+
+  @POST("/clothing/create")
+  Future<Clothing> updateClothing(
+    @Part() int id,
+    @Part() String title,
+    @Part() String type,
+    @Part() String color,
+    @Part() List<String> imageUrls,
+    @Part() List<File> imageFiles,
+  );
 }

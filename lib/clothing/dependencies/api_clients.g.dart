@@ -77,4 +77,90 @@ class _RestClient implements RestClient {
     final value = UrlDto.fromJson(_result.data);
     return value;
   }
+
+  @override
+  Future<Clothing> createClothing(
+      title, type, color, imageUrls, imageFiles) async {
+    ArgumentError.checkNotNull(title, 'title');
+    ArgumentError.checkNotNull(type, 'type');
+    ArgumentError.checkNotNull(color, 'color');
+    ArgumentError.checkNotNull(imageUrls, 'imageUrls');
+    ArgumentError.checkNotNull(imageFiles, 'imageFiles');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = FormData();
+    if (title != null) {
+      _data.fields.add(MapEntry('title', title));
+    }
+    if (type != null) {
+      _data.fields.add(MapEntry('type', type));
+    }
+    if (color != null) {
+      _data.fields.add(MapEntry('color', color));
+    }
+    imageUrls?.forEach((i) {
+      _data.fields.add(MapEntry('imageUrls', i));
+    });
+    _data.files.addAll(imageFiles?.map((i) => MapEntry(
+        'imageFiles',
+        MultipartFile.fromFileSync(
+          i.path,
+          filename: i.path.split(Platform.pathSeparator).last,
+        ))));
+    final _result = await _dio.request<Map<String, dynamic>>('/clothing/create',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = Clothing.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<Clothing> updateClothing(
+      id, title, type, color, imageUrls, imageFiles) async {
+    ArgumentError.checkNotNull(id, 'id');
+    ArgumentError.checkNotNull(title, 'title');
+    ArgumentError.checkNotNull(type, 'type');
+    ArgumentError.checkNotNull(color, 'color');
+    ArgumentError.checkNotNull(imageUrls, 'imageUrls');
+    ArgumentError.checkNotNull(imageFiles, 'imageFiles');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = FormData();
+    if (id != null) {
+      _data.fields.add(MapEntry('id', id.toString()));
+    }
+    if (title != null) {
+      _data.fields.add(MapEntry('title', title));
+    }
+    if (type != null) {
+      _data.fields.add(MapEntry('type', type));
+    }
+    if (color != null) {
+      _data.fields.add(MapEntry('color', color));
+    }
+    imageUrls?.forEach((i) {
+      _data.fields.add(MapEntry('imageUrls', i));
+    });
+    _data.files.addAll(imageFiles?.map((i) => MapEntry(
+        'imageFiles',
+        MultipartFile.fromFileSync(
+          i.path,
+          filename: i.path.split(Platform.pathSeparator).last,
+        ))));
+    final _result = await _dio.request<Map<String, dynamic>>('/clothing/create',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = Clothing.fromJson(_result.data);
+    return value;
+  }
 }

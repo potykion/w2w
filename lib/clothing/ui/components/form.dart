@@ -56,7 +56,7 @@ class _ClothingTypeInputState extends State<ClothingTypeInput> {
           hideOnLoading: true,
           hideSuggestionsOnKeyboardHide: false,
           suggestionsCallback: (String pattern) =>
-              Get.find<ClothingRepo>().findTypeByPattern(pattern),
+              Get.find<ClothingStorage>().findTypeByPattern(pattern),
           onSuggestionSelected: (String suggestion) => tec.text = suggestion,
           itemBuilder: (BuildContext context, String itemData) =>
               ListTile(title: Text(itemData)),

@@ -22,8 +22,8 @@ var pages = [
       name: Routes.clothingList,
       page: () => ClothingListPage(),
       binding: BindingsBuilder(() {
-        Get.put(ClothingRepo(Get.find(tag: "clothingBox")));
-        Get.put(ClothingListController(Get.find<ClothingRepo>()));
+        Get.put(ClothingStorage(Get.find(tag: "clothingBox")));
+        Get.put(ClothingListController(Get.find<ClothingStorage>()));
 
         Get.put(Dio());
         Get.put(RestClient(Get.find<Dio>()));

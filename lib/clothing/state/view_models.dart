@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:w2w/clothing/domain/models.dart';
+import 'package:w2w/clothing/state/controllers.dart';
 import 'package:w2w/routes.dart';
+import '../dependencies/repositories.dart';
 
 class ClothingFormVM {
   int id;
@@ -26,8 +28,9 @@ class ClothingFormVM {
         images: clothing.images,
       );
 
-  save() {
-    // todo отправить на серв
+  save() async {
+    var clothing = await Get.find<ClothingServer>().create(this);
+    Get.find<ClothingListController>().addClothing(clothing);
     Get.toNamed(Routes.clothingList);
   }
 }

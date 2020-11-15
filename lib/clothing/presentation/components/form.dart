@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get/get.dart';
-import 'package:w2w/clothing/dependencies/repositories.dart';
-import 'package:w2w/clothing/state/controllers.dart';
-import 'package:w2w/core/ui/components/components.dart';
-
+import '../../data/local.dart';
+import '../../../core/presentation/components/components.dart';
 import '../../../routes.dart';
 
 class ClothingTitleInput extends StatelessWidget {
@@ -56,7 +54,7 @@ class _ClothingTypeInputState extends State<ClothingTypeInput> {
           hideOnLoading: true,
           hideSuggestionsOnKeyboardHide: false,
           suggestionsCallback: (String pattern) =>
-              Get.find<ClothingStorage>().findTypeByPattern(pattern),
+              Get.find<ClothingLocalStorage>().findTypeByPattern(pattern),
           onSuggestionSelected: (String suggestion) => tec.text = suggestion,
           itemBuilder: (BuildContext context, String itemData) =>
               ListTile(title: Text(itemData)),

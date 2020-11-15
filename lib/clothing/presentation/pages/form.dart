@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:w2w/clothing/domain/models.dart';
-import 'package:w2w/clothing/state/view_models.dart';
+import '../state/view_models.dart';
+import '../../../core/presentation/components/components.dart';
 import '../components/form.dart';
-import '../../../core/ui/components/components.dart';
 
 class ClothingFormPage extends StatelessWidget {
-  ClothingFormVM get clothing =>
-      ClothingFormVM.fromClothing(Get.arguments as Clothing) ??
-      ClothingFormVM();
+  ClothingWriteVM get clothing =>
+      ClothingWriteVM.fromClothing(Get.arguments as Clothing) ??
+      ClothingWriteVM();
 
   @override
   Widget build(BuildContext context) => Scaffold(

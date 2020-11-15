@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:w2w/clothing/state/controllers.dart';
-import 'package:w2w/clothing/ui/components/list.dart';
+import '../components/list.dart';
+import '../state/controllers.dart';
 
-class ClothingListPage extends GetView<ClothingListController> {
+class ClothingListPage extends GetView<ClothingController> {
   @override
   Widget build(BuildContext context) => Scaffold(
         body: controller.clothingList.length == 0

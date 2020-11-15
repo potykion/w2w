@@ -1,13 +1,10 @@
 import 'dart:io';
-
 import 'package:camera/camera.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:w2w/clothing/dependencies/api_clients.dart';
-import 'package:w2w/clothing/state/controllers.dart';
-import 'package:w2w/clothing/ui/pages/add-image.dart';
-import 'package:w2w/core/ui/components/components.dart';
+import '../../../core/presentation/components/components.dart';
+import '../pages/add-image.dart';
 
 class UploadPhotoViaFileButton extends StatelessWidget {
   @override

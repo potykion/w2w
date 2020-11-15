@@ -16,11 +16,16 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  final Bindings binding;
+
+  const MyApp({Key key, this.binding = const ClothingBinding()})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) => GetMaterialApp(
         theme: theme,
         getPages: pages,
         initialRoute: Routes.clothingList,
-        initialBinding: ClothingBinding(),
+        initialBinding: binding,
       );
 }

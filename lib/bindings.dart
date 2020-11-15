@@ -8,6 +8,8 @@ import 'clothing/domain/repos.dart';
 import 'clothing/presentation/state/controllers.dart';
 
 class ClothingBinding implements Bindings {
+  const ClothingBinding();
+
   @override
   void dependencies() {
     Get.put(ClothingLocalStorage(Get.find(tag: "clothingBox")));

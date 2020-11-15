@@ -7,9 +7,9 @@ import '../state/controllers.dart';
 class ClothingListPage extends GetView<ClothingController> {
   @override
   Widget build(BuildContext context) => Scaffold(
-        body: controller.clothingList.length == 0
+        body: Obx(() => controller.clothingList.length == 0
             ? buildNoClothing(context)
-            : buildGroupedClothingList(context),
+            : buildGroupedClothingList(context)),
         appBar: ClothingListAppBar(),
       );
 

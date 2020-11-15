@@ -26,7 +26,7 @@ class ClothingWriteVM {
       );
 
   save() async {
-    await Get.find<ClothingController>().createClothing(this);
+    await Get.find<ClothingController>().create(this);
     Get.toNamed(Routes.clothingList);
   }
 }

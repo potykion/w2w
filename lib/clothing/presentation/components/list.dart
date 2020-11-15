@@ -40,10 +40,12 @@ class TypeClothingList extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Image.network(
-                      clothingList[index].images.first,
-                      height: 200,
-                    ),
+                    clothingList[index].images.length > 0
+                        ? Image.network(
+                            clothingList[index].images.first,
+                            height: 200,
+                          )
+                        : Placeholder(fallbackHeight: 200),
                     SizedBox(height: 10),
                     Text(
                       clothingList[index].title,

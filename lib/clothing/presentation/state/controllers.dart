@@ -18,12 +18,16 @@ class ClothingController extends GetxController {
   ClothingController(this.repo);
 
   @override
-  void onInit() async {
-    clothingList.value = await repo.listClothing();
+  void onInit() {
+    list();
     super.onInit();
   }
 
-  createClothing(ClothingWriteVM vm) async {
+  list() async {
+    clothingList.value = await repo.listClothing();
+  }
+
+  create(ClothingWriteVM vm) async {
     var clothing = await repo.createClothing(
       CreateClothingDTO(
           title: vm.title,

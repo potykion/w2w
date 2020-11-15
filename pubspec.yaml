@@ -63,6 +63,9 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  # моки
+  mockito:
+
   # кодогенерация
   build_runner:
 

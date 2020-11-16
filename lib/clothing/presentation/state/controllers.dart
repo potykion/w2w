@@ -33,8 +33,9 @@ class ClothingController extends GetxController {
           title: vm.title,
           type: vm.type,
           color: vm.color,
-          imageUrls: vm.images.where((image) => image is String).toList(),
-          imageFiles: vm.images.where((image) => image is File).toList()),
+          imageUrls: List.castFrom<dynamic, String>(vm.images.where((image) => image is String).toList()),
+          // imageUrls: vm.images.where((image) => image is String).toList(),
+          imageFiles: List.castFrom<dynamic, File>(vm.images.where((image) => image is File).toList())),
     );
 
     clothingList.add(clothing);

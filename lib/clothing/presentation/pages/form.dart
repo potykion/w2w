@@ -5,10 +5,23 @@ import '../state/view_models.dart';
 import '../../../core/presentation/components/components.dart';
 import '../components/form.dart';
 
-class ClothingFormPage extends StatelessWidget {
-  ClothingWriteVM get clothing => Get.arguments != null
-      ? ClothingWriteVM.fromClothing(Get.arguments as Clothing)
-      : ClothingWriteVM();
+class ClothingFormPage extends StatefulWidget {
+  @override
+  _ClothingFormPageState createState() => _ClothingFormPageState();
+}
+
+class _ClothingFormPageState extends State<ClothingFormPage> {
+  ClothingWriteVM clothing;
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      clothing = Get.arguments != null
+          ? ClothingWriteVM.fromClothing(Get.arguments as Clothing)
+          : ClothingWriteVM();
+    });
+  }
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -32,7 +45,9 @@ class ClothingFormPage extends StatelessWidget {
             ),
             FullWidthButton(
               text: "Сохранить",
-              onPressed: () => clothing.save(),
+              onPressed: () {
+                return clothing.save();
+              },
             ),
           ],
         ),

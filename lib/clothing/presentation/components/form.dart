@@ -97,10 +97,10 @@ class _ClothingColorInputState extends State<ClothingColorInput> {
 }
 
 class ClothingImagesInput extends StatefulWidget {
-  final List<String> initial;
+  final List<dynamic> initial;
 
   // todo реализовать change
-  final Function(List<String> images) change;
+  final Function(List<dynamic> images) change;
 
   const ClothingImagesInput({Key key, this.initial, this.change})
       : super(key: key);

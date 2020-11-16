@@ -6,9 +6,9 @@ import '../../../core/presentation/components/components.dart';
 import '../components/form.dart';
 
 class ClothingFormPage extends StatelessWidget {
-  ClothingWriteVM get clothing =>
-      ClothingWriteVM.fromClothing(Get.arguments as Clothing) ??
-      ClothingWriteVM();
+  ClothingWriteVM get clothing => Get.arguments != null
+      ? ClothingWriteVM.fromClothing(Get.arguments as Clothing)
+      : ClothingWriteVM();
 
   @override
   Widget build(BuildContext context) => Scaffold(

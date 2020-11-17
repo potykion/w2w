@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'clothing/presentation/pages/add-image.dart';
 import 'clothing/presentation/pages/add.dart';
 import 'clothing/presentation/pages/form.dart';
 import 'clothing/presentation/pages/list.dart';
@@ -24,8 +23,4 @@ var pages = [
     name: Routes.clothingForm,
     page: () => ClothingFormPage(),
   ),
-  GetPage(
-    name: Routes.clothingAddImageChoice,
-    page: () => AddImageChoicePage(),
-  )
 ];

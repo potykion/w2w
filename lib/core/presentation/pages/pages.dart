@@ -1,3 +1,4 @@
+// A screen that takes in a list of cameras and the Directory to store images.
 import 'dart:io';
 
 import 'package:camera/camera.dart';
@@ -5,47 +6,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-import '../components/add-image.dart';
-import '../../../core/presentation/components/components.dart';
 
-class AddImageChoicePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          WithHeadlineText(
-            withPadding: true,
-            text: "Добавить фото",
-            child: Column(
-              children: [
-                UploadPhotoViaFileButton(),
-                UploadPhotoViaCameraButton(),
-                UploadPhotoViaLinkButtonAndInput(),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// A screen that takes in a list of cameras and the Directory to store images.
-class TakePictureScreen extends StatefulWidget {
+class TakePhotoPage extends StatefulWidget {
   final CameraDescription camera;
 
-  const TakePictureScreen({
+  const TakePhotoPage({
     Key key,
     @required this.camera,
   }) : super(key: key);
 
   @override
-  TakePictureScreenState createState() => TakePictureScreenState();
+  TakePhotoPageState createState() => TakePhotoPageState();
 }
 
-class TakePictureScreenState extends State<TakePictureScreen> {
+class TakePhotoPageState extends State<TakePhotoPage> {
   // Add two variables to the state class to store the CameraController and
   // the Future.
   CameraController _controller;

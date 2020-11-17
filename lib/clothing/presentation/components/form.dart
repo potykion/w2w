@@ -1,9 +1,13 @@
+import 'dart:io';
+
+import 'package:camera/camera.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get/get.dart';
+import 'package:w2w/core/presentation/pages/pages.dart';
 import '../../data/local.dart';
 import '../../../core/presentation/components/components.dart';
-import '../../../routes.dart';
 
 class ClothingTitleInput extends StatelessWidget {
   final String initial;
@@ -115,7 +119,7 @@ class _ClothingImagesInputState extends State<ClothingImagesInput> {
   @override
   void initState() {
     super.initState();
-    images = widget.initial ?? [];
+    setState(() => images = widget.initial ?? []);
   }
 
   @override
@@ -138,10 +142,91 @@ class _ClothingImagesInputState extends State<ClothingImagesInput> {
         trailing: IconButton(
           icon: Icon(Icons.add),
           onPressed: () async {
-            var image = await Get.toNamed(Routes.clothingAddImageChoice);
+            var image = await Get.bottomSheet(AddImageBottomSheet());
+            if (image == null) return;
+
             setState(() => images = [...images, image]);
-            // todo widget.change(images);
+            widget.change(images);
           },
         ),
       );
+}
+
+class AddImageBottomSheet extends StatefulWidget {
+  @override
+  _AddImageBottomSheetState createState() => _AddImageBottomSheetState();
+}
+
+class _AddImageBottomSheetState extends State<AddImageBottomSheet> {
+  bool showLinkInput = false;
+
+  @override
+  Widget build(BuildContext context) => Container(
+        constraints: BoxConstraints(minHeight: 120, maxHeight: 220),
+        child: Card(
+          color: Colors.white,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  buildAddImageButton(
+                    icon: Icons.camera_alt,
+                    text: "Камера",
+                    onTap: () async {
+                      setState(() => showLinkInput = false);
+                      final cameras = await availableCameras();
+                      final firstCamera = cameras.first;
+                      var imageFile =
+                          await Get.to(TakePhotoPage(camera: firstCamera));
+                      Get.back(result: imageFile);
+                    },
+                  ),
+                  buildAddImageButton(
+                    icon: Icons.folder,
+                    text: "Файл",
+                    onTap: () async {
+                      setState(() => showLinkInput = false);
+                      var result = await FilePicker.platform
+                          .pickFiles(type: FileType.image);
+                      if (result != null) {
+                        var imageFile = File(result.files.single.path);
+                        Get.back(result: imageFile);
+                      }
+                    },
+                  ),
+                  buildAddImageButton(
+                    icon: Icons.link,
+                    text: "Ссылка",
+                    onTap: () => setState(() => showLinkInput = !showLinkInput),
+                  ),
+                ],
+              ),
+              if (showLinkInput)
+                LinkSubmitInput(
+                  hintText: "Ссылка на фотку со шмоткой",
+                  onSubmit: (imageUrl) async => Get.back(result: imageUrl),
+                )
+            ],
+          ),
+        ),
+      );
+
+  Padding buildAddImageButton({IconData icon, String text, Function onTap}) {
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: Container(
+        width: 100,
+        height: 100,
+        child: InkWell(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [Icon(icon, size: 40), Text(text)],
+            ),
+            onTap: onTap,
+            borderRadius: BorderRadius.circular(20)),
+      ),
+    );
+  }
 }

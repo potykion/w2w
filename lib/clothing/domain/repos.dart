@@ -21,3 +21,7 @@ abstract class CreateClothingDTO with _$CreateClothingDTO {
     List<File> imageFiles,
   }) = _CreateClothingDTO;
 }
+
+abstract class BaseClothingImageFilePicker {
+  Future<File> call();
+}

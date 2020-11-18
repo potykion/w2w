@@ -5,6 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get/get.dart';
+import 'package:w2w/clothing/domain/repos.dart';
 import 'package:w2w/core/presentation/pages/pages.dart';
 import '../../data/local.dart';
 import '../../../core/presentation/components/components.dart';
@@ -103,7 +104,6 @@ class _ClothingColorInputState extends State<ClothingColorInput> {
 class ClothingImagesInput extends StatefulWidget {
   final List<dynamic> initial;
 
-  // todo реализовать change
   final Function(List<dynamic> images) change;
 
   const ClothingImagesInput({Key key, this.initial, this.change})
@@ -188,10 +188,9 @@ class _AddImageBottomSheetState extends State<AddImageBottomSheet> {
                     text: "Файл",
                     onTap: () async {
                       setState(() => showLinkInput = false);
-                      var result = await FilePicker.platform
-                          .pickFiles(type: FileType.image);
-                      if (result != null) {
-                        var imageFile = File(result.files.single.path);
+                      var imageFile =
+                          await Get.find<BaseClothingImageFilePicker>()();
+                      if (imageFile != null) {
                         Get.back(result: imageFile);
                       }
                     },
@@ -205,6 +204,7 @@ class _AddImageBottomSheetState extends State<AddImageBottomSheet> {
               ),
               if (showLinkInput)
                 LinkSubmitInput(
+                  key: Key("imageLinkInput"),
                   hintText: "Ссылка на фотку со шмоткой",
                   onSubmit: (imageUrl) async => Get.back(result: imageUrl),
                 )

@@ -23,6 +23,7 @@ class ClothingBinding implements Bindings {
         clothingLocalStorage: Get.find<ClothingLocalStorage>(),
       ),
     );
+    Get.put<BaseClothingImageFilePicker>(ClothingImageFilePicker());
 
     Get.put(ClothingController(Get.find<BaseClothingRepo>()));
   }

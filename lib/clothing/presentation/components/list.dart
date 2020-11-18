@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:w2w/clothing/domain/models.dart';
-import 'package:w2w/clothing/state/controllers.dart';
 import 'package:w2w/routes.dart';
 
 class ClothingListAppBar extends StatelessWidget with PreferredSizeWidget {
@@ -41,10 +40,12 @@ class TypeClothingList extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Image.network(
-                      clothingList[index].images.first,
-                      height: 200,
-                    ),
+                    clothingList[index].images.length > 0
+                        ? Image.network(
+                            clothingList[index].images.first,
+                            height: 200,
+                          )
+                        : Placeholder(fallbackHeight: 200),
                     SizedBox(height: 10),
                     Text(
                       clothingList[index].title,
@@ -55,10 +56,10 @@ class TypeClothingList extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                var controller = Get.find<ClothingFormController>();
-                controller.setClothing(clothingList[index]);
-                controller.setClothingId(index);
-                return Get.toNamed(Routes.clothingForm);
+                // var controller = Get.find<ClothingFormController>();
+                // controller.setClothing(clothingList[index]);
+                // controller.setClothingId(index);
+                // return Get.toNamed(Routes.clothingForm);
               },
             ),
           ),

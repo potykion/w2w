@@ -1,13 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'api_clients.dart';
+part of 'remote.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+UrlDto _$UrlDtoFromJson(Map json) {
+  return UrlDto(
+    json['url'] as String,
+  );
+}
+
+Map<String, dynamic> _$UrlDtoToJson(UrlDto instance) => <String, dynamic>{
+      'url': instance.url,
+    };
 
 // **************************************************************************
 // RetrofitGenerator
 // **************************************************************************
 
-class _RestClient implements RestClient {
-  _RestClient(this._dio, {this.baseUrl}) {
+class _ClothingRestClient implements ClothingRestClient {
+  _ClothingRestClient(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
     baseUrl ??= 'http://84.201.135.199:8098/';
   }
@@ -22,7 +36,7 @@ class _RestClient implements RestClient {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'url': url};
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>('/parse',
+    final _result = await _dio.request<Map<String, dynamic>>('/clothing/parse',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',

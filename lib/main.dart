@@ -5,6 +5,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:w2w/routes.dart';
 import 'package:w2w/theme.dart';
 
+import 'bindings.dart';
+
 void main() async {
   await Hive.initFlutter();
 
@@ -14,10 +16,16 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  final Bindings binding;
+
+  const MyApp({Key key, this.binding = const ClothingBinding()})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) => GetMaterialApp(
         theme: theme,
         getPages: pages,
         initialRoute: Routes.clothingList,
+        initialBinding: binding,
       );
 }

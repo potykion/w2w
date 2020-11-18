@@ -38,6 +38,7 @@ dependencies:
 
   # автокомплит
   flutter_typeahead: ^1.8.8
+  flutter_keyboard_visibility: ^3.3.0
 
   # стейт-менеджмент / роутинг / диай
   get:
@@ -62,6 +63,9 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  # моки
+  mockito:
 
   # кодогенерация
   build_runner:

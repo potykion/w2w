@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get/get.dart';
 import 'package:w2w/clothing/domain/repos.dart';
@@ -18,12 +19,13 @@ class ClothingTitleInput extends StatelessWidget {
       : super(key: key);
 
   @override
-  Widget build(BuildContext context) => FixedPadding(
-    child: WithHeadlineText(
+  Widget build(BuildContext context) =>
+      FixedPadding(
+        child: WithHeadlineText(
           text: "Название",
           child: TextInput(initial: initial, change: change),
         ),
-  );
+      );
 }
 
 class ClothingTypeInput extends StatefulWidget {
@@ -48,8 +50,9 @@ class _ClothingTypeInputState extends State<ClothingTypeInput> {
   }
 
   @override
-  Widget build(BuildContext context) => FixedPadding(
-    child: WithHeadlineText(
+  Widget build(BuildContext context) =>
+      FixedPadding(
+        child: WithHeadlineText(
           text: "Тип",
           child: TypeAheadFormField<String>(
             textFieldConfiguration: TextFieldConfiguration(
@@ -68,7 +71,7 @@ class _ClothingTypeInputState extends State<ClothingTypeInput> {
                 ListTile(title: Text(itemData)),
           ),
         ),
-  );
+      );
 }
 
 class ClothingColorInput extends StatefulWidget {
@@ -85,26 +88,74 @@ class ClothingColorInput extends StatefulWidget {
 class _ClothingColorInputState extends State<ClothingColorInput> {
   var tec = TextEditingController();
 
+  String colorHex;
+
   @override
   void initState() {
     super.initState();
     tec.text = widget.initial;
-    tec.addListener(() => widget.change(tec.text));
+    colorHex = widget.initial;
+    tec.addListener(() {
+      if (tec.text.length == 6) {
+        setState(() => colorHex = tec.text);
+        widget.change(colorHex);
+      }
+    });
   }
 
-  // todo колор-пикер
   @override
-  Widget build(BuildContext context) => FixedPadding(
-    child: WithHeadlineText(
+  Widget build(BuildContext context) =>
+      FixedPadding(
+        child: WithHeadlineText(
           text: "Цвет",
           child: TextFormField(
             controller: tec,
+            maxLength: 6,
             decoration: InputDecoration(
               border: OutlineInputBorder(),
+              suffixIcon: Padding(
+                padding: const EdgeInsets.only(right: 13.0),
+                child: GestureDetector(
+                  child: CircleAvatar(
+                    backgroundColor: Colors.black,
+                    child: CircleAvatar(
+                      backgroundColor: colorFromStr(colorHex),
+                      radius: 12,
+                    ),
+                  ),
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      child: AlertDialog(
+                        title: const Text('Pick a color!'),
+                        content: SingleChildScrollView(
+                          child: ColorPicker(
+                            pickerColor: colorFromStr(colorHex),
+                            onColorChanged: (color) =>
+                                setState(() =>
+                                tec.text = color.value.toRadixString(16).substring(2)),
+                            showLabel: true,
+                            pickerAreaHeightPercent: 0.8,
+                          ),
+                        ),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: const Text('Got it'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+              suffixIconConstraints: BoxConstraints.tight(Size(40, 40)),
             ),
           ),
         ),
-  );
+      );
 }
 
 class ClothingImagesInput extends StatefulWidget {
@@ -129,8 +180,9 @@ class _ClothingImagesInputState extends State<ClothingImagesInput> {
   }
 
   @override
-  Widget build(BuildContext context) => FixedPadding(
-    child: WithHeadlineText(
+  Widget build(BuildContext context) =>
+      FixedPadding(
+        child: WithHeadlineText(
           text: "Фоточки",
           child: SizedBox(
             height: 300,
@@ -157,7 +209,7 @@ class _ClothingImagesInputState extends State<ClothingImagesInput> {
             },
           ),
         ),
-  );
+      );
 }
 
 class AddImageBottomSheet extends StatefulWidget {
@@ -169,7 +221,8 @@ class _AddImageBottomSheetState extends State<AddImageBottomSheet> {
   bool showLinkInput = false;
 
   @override
-  Widget build(BuildContext context) => Container(
+  Widget build(BuildContext context) =>
+      Container(
         constraints: BoxConstraints(minHeight: 120, maxHeight: 220),
         child: Card(
           color: Colors.white,
@@ -187,7 +240,7 @@ class _AddImageBottomSheetState extends State<AddImageBottomSheet> {
                       final cameras = await availableCameras();
                       final firstCamera = cameras.first;
                       var imageFile =
-                          await Get.to(TakePhotoPage(camera: firstCamera));
+                      await Get.to(TakePhotoPage(camera: firstCamera));
                       Get.back(result: imageFile);
                     },
                   ),
@@ -197,7 +250,7 @@ class _AddImageBottomSheetState extends State<AddImageBottomSheet> {
                     onTap: () async {
                       setState(() => showLinkInput = false);
                       var imageFile =
-                          await Get.find<BaseClothingImageFilePicker>()();
+                      await Get.find<BaseClothingImageFilePicker>()();
                       if (imageFile != null) {
                         Get.back(result: imageFile);
                       }

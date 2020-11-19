@@ -64,8 +64,9 @@ class WithHeadlineText extends StatelessWidget {
     Widget textRow = Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Padding(padding: EdgeInsets.only(bottom: 10),
-        child: Text(text, style: Theme.of(context).textTheme.headline6)),
+        Padding(
+            padding: EdgeInsets.only(bottom: 10),
+            child: Text(text, style: Theme.of(context).textTheme.headline6)),
         Spacer(),
         if (trailing != null) trailing
       ],
@@ -211,5 +212,13 @@ class _LinkSubmitInputState extends State<LinkSubmitInput> {
         ),
       ),
     );
+  }
+}
+
+Color colorFromStr(String colorHex) {
+  try {
+    return Color(int.parse("0xff$colorHex"));
+  } on FormatException {
+    return Colors.black;
   }
 }

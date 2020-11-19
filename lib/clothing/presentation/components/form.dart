@@ -18,10 +18,12 @@ class ClothingTitleInput extends StatelessWidget {
       : super(key: key);
 
   @override
-  Widget build(BuildContext context) => WithHeadlineText(
-        text: "Название",
-        child: TextInput(initial: initial, change: change),
-      );
+  Widget build(BuildContext context) => FixedPadding(
+    child: WithHeadlineText(
+          text: "Название",
+          child: TextInput(initial: initial, change: change),
+        ),
+  );
 }
 
 class ClothingTypeInput extends StatefulWidget {
@@ -46,25 +48,27 @@ class _ClothingTypeInputState extends State<ClothingTypeInput> {
   }
 
   @override
-  Widget build(BuildContext context) => WithHeadlineText(
-        text: "Тип",
-        child: TypeAheadFormField<String>(
-          textFieldConfiguration: TextFieldConfiguration(
-            controller: tec,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
+  Widget build(BuildContext context) => FixedPadding(
+    child: WithHeadlineText(
+          text: "Тип",
+          child: TypeAheadFormField<String>(
+            textFieldConfiguration: TextFieldConfiguration(
+              controller: tec,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+              ),
             ),
+            hideOnEmpty: true,
+            hideOnLoading: true,
+            hideSuggestionsOnKeyboardHide: false,
+            suggestionsCallback: (String pattern) =>
+                Get.find<ClothingLocalStorage>().findTypeByPattern(pattern),
+            onSuggestionSelected: (String suggestion) => tec.text = suggestion,
+            itemBuilder: (BuildContext context, String itemData) =>
+                ListTile(title: Text(itemData)),
           ),
-          hideOnEmpty: true,
-          hideOnLoading: true,
-          hideSuggestionsOnKeyboardHide: false,
-          suggestionsCallback: (String pattern) =>
-              Get.find<ClothingLocalStorage>().findTypeByPattern(pattern),
-          onSuggestionSelected: (String suggestion) => tec.text = suggestion,
-          itemBuilder: (BuildContext context, String itemData) =>
-              ListTile(title: Text(itemData)),
         ),
-      );
+  );
 }
 
 class ClothingColorInput extends StatefulWidget {
@@ -90,15 +94,17 @@ class _ClothingColorInputState extends State<ClothingColorInput> {
 
   // todo колор-пикер
   @override
-  Widget build(BuildContext context) => WithHeadlineText(
-        text: "Цвет",
-        child: TextFormField(
-          controller: tec,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
+  Widget build(BuildContext context) => FixedPadding(
+    child: WithHeadlineText(
+          text: "Цвет",
+          child: TextFormField(
+            controller: tec,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+            ),
           ),
         ),
-      );
+  );
 }
 
 class ClothingImagesInput extends StatefulWidget {
@@ -123,33 +129,35 @@ class _ClothingImagesInputState extends State<ClothingImagesInput> {
   }
 
   @override
-  Widget build(BuildContext context) => WithHeadlineText(
-        text: "Фоточки",
-        child: SizedBox(
-          height: 300,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            children: [
-              for (var image in images)
-                Card(
-                  child: image is String
-                      ? Image.network(image)
-                      : Image.file(image),
-                )
-            ],
+  Widget build(BuildContext context) => FixedPadding(
+    child: WithHeadlineText(
+          text: "Фоточки",
+          child: SizedBox(
+            height: 300,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: [
+                for (var image in images)
+                  Card(
+                    child: image is String
+                        ? Image.network(image)
+                        : Image.file(image),
+                  )
+              ],
+            ),
+          ),
+          trailing: IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () async {
+              var image = await Get.bottomSheet(AddImageBottomSheet());
+              if (image == null) return;
+
+              setState(() => images = [...images, image]);
+              widget.change(images);
+            },
           ),
         ),
-        trailing: IconButton(
-          icon: Icon(Icons.add),
-          onPressed: () async {
-            var image = await Get.bottomSheet(AddImageBottomSheet());
-            if (image == null) return;
-
-            setState(() => images = [...images, image]);
-            widget.change(images);
-          },
-        ),
-      );
+  );
 }
 
 class AddImageBottomSheet extends StatefulWidget {

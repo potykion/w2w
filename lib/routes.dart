@@ -2,12 +2,13 @@ import 'package:get/get.dart';
 import 'clothing/presentation/pages/add.dart';
 import 'clothing/presentation/pages/form.dart';
 import 'clothing/presentation/pages/list.dart';
-import 'clothing/presentation/pages/playground.dart';
+import 'core/presentation/pages/pages.dart';
 
 abstract class Routes {
   static const clothingList = "/clothing-list";
   static const addClothingChoice = "/add-clothing-choice";
   static const clothingForm = "/clothing-form";
+  static const pickPhotoColor = "/pick-photo-color-page";
   static const playground = "/playground";
 }
 
@@ -24,5 +25,5 @@ var pages = [
     name: Routes.clothingForm,
     page: () => ClothingFormPage(),
   ),
-  GetPage(name: Routes.playground, page: () => PlaygroundPage())
+  GetPage(name: Routes.pickPhotoColor, page: () => PickPhotoColorPage())
 ];

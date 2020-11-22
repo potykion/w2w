@@ -2,12 +2,13 @@ import 'package:get/get.dart';
 import 'clothing/presentation/pages/add.dart';
 import 'clothing/presentation/pages/form.dart';
 import 'clothing/presentation/pages/list.dart';
+import 'core/presentation/pages/pages.dart';
 
 abstract class Routes {
   static const clothingList = "/clothing-list";
   static const addClothingChoice = "/add-clothing-choice";
   static const clothingForm = "/clothing-form";
-  static const clothingAddImageChoice = "/clothing/add-image-choice";
+  static const playground = "/playground";
 }
 
 var pages = [

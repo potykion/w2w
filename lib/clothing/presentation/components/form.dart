@@ -1,14 +1,13 @@
-import 'dart:io';
-
 import 'package:camera/camera.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get/get.dart';
 import 'package:w2w/clothing/domain/repos.dart';
 import 'package:w2w/core/presentation/pages/pages.dart';
 import '../../data/local.dart';
 import '../../../core/presentation/components/components.dart';
+import '../../../core/utils.dart';
 
 class ClothingTitleInput extends StatelessWidget {
   final String initial;
@@ -18,9 +17,11 @@ class ClothingTitleInput extends StatelessWidget {
       : super(key: key);
 
   @override
-  Widget build(BuildContext context) => WithHeadlineText(
-        text: "Название",
-        child: TextInput(initial: initial, change: change),
+  Widget build(BuildContext context) => FixedPadding(
+        child: WithHeadlineText(
+          text: "Название",
+          child: TextInput(initial: initial, change: change),
+        ),
       );
 }
 
@@ -46,23 +47,25 @@ class _ClothingTypeInputState extends State<ClothingTypeInput> {
   }
 
   @override
-  Widget build(BuildContext context) => WithHeadlineText(
-        text: "Тип",
-        child: TypeAheadFormField<String>(
-          textFieldConfiguration: TextFieldConfiguration(
-            controller: tec,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
+  Widget build(BuildContext context) => FixedPadding(
+        child: WithHeadlineText(
+          text: "Тип",
+          child: TypeAheadFormField<String>(
+            textFieldConfiguration: TextFieldConfiguration(
+              controller: tec,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+              ),
             ),
+            hideOnEmpty: true,
+            hideOnLoading: true,
+            hideSuggestionsOnKeyboardHide: false,
+            suggestionsCallback: (String pattern) =>
+                Get.find<ClothingLocalStorage>().findTypeByPattern(pattern),
+            onSuggestionSelected: (String suggestion) => tec.text = suggestion,
+            itemBuilder: (BuildContext context, String itemData) =>
+                ListTile(title: Text(itemData)),
           ),
-          hideOnEmpty: true,
-          hideOnLoading: true,
-          hideSuggestionsOnKeyboardHide: false,
-          suggestionsCallback: (String pattern) =>
-              Get.find<ClothingLocalStorage>().findTypeByPattern(pattern),
-          onSuggestionSelected: (String suggestion) => tec.text = suggestion,
-          itemBuilder: (BuildContext context, String itemData) =>
-              ListTile(title: Text(itemData)),
         ),
       );
 }
@@ -81,21 +84,68 @@ class ClothingColorInput extends StatefulWidget {
 class _ClothingColorInputState extends State<ClothingColorInput> {
   var tec = TextEditingController();
 
+  String colorHex;
+
   @override
   void initState() {
     super.initState();
     tec.text = widget.initial;
-    tec.addListener(() => widget.change(tec.text));
+    colorHex = widget.initial;
+    tec.addListener(() {
+      if (tec.text.length == 6) {
+        setState(() => colorHex = tec.text);
+        widget.change(colorHex);
+      }
+    });
   }
 
-  // todo колор-пикер
   @override
-  Widget build(BuildContext context) => WithHeadlineText(
-        text: "Цвет",
-        child: TextFormField(
-          controller: tec,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(),
+  Widget build(BuildContext context) => FixedPadding(
+        child: WithHeadlineText(
+          text: "Цвет",
+          child: TextFormField(
+            controller: tec,
+            maxLength: 6,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              suffixIcon: Padding(
+                padding: const EdgeInsets.only(right: 5.0),
+                child: Row(
+                  children: [
+                    GestureDetector(
+                      child: CircleAvatar(
+                        radius: 12,
+                        backgroundColor: Colors.black,
+                        child: CircleAvatar(
+                          backgroundColor: colorFromStr(colorHex),
+                          radius: 10,
+                        ),
+                      ),
+                      onTap: () {
+                        Get.dialog(ColorPickerDialog(
+                          initial: colorFromStr(colorHex),
+                          change: (color) {
+                            tec.text = color.toRGBHex();
+                          },
+                        ));
+                      },
+                    ),
+                    IconButton(
+                      color: Colors.black,
+                      icon: Icon(Icons.camera_alt),
+                      onPressed: () async {
+                        final camera = (await availableCameras()).first;
+                        var color =
+                            await Get.to(PickPhotoColorPage(camera: camera))
+                                as Color;
+                        tec.text = color.toRGBHex();
+                      },
+                    )
+                  ],
+                ),
+              ),
+              suffixIconConstraints: BoxConstraints.tight(Size(80, 40)),
+            ),
           ),
         ),
       );
@@ -123,31 +173,33 @@ class _ClothingImagesInputState extends State<ClothingImagesInput> {
   }
 
   @override
-  Widget build(BuildContext context) => WithHeadlineText(
-        text: "Фоточки",
-        child: SizedBox(
-          height: 300,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            children: [
-              for (var image in images)
-                Card(
-                  child: image is String
-                      ? Image.network(image)
-                      : Image.file(image),
-                )
-            ],
+  Widget build(BuildContext context) => FixedPadding(
+        child: WithHeadlineText(
+          text: "Фоточки",
+          child: SizedBox(
+            height: 300,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: [
+                for (var image in images)
+                  Card(
+                    child: image is String
+                        ? Image.network(image)
+                        : Image.file(image),
+                  )
+              ],
+            ),
           ),
-        ),
-        trailing: IconButton(
-          icon: Icon(Icons.add),
-          onPressed: () async {
-            var image = await Get.bottomSheet(AddImageBottomSheet());
-            if (image == null) return;
+          trailing: IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () async {
+              var image = await Get.bottomSheet(AddImageBottomSheet());
+              if (image == null) return;
 
-            setState(() => images = [...images, image]);
-            widget.change(images);
-          },
+              setState(() => images = [...images, image]);
+              widget.change(images);
+            },
+          ),
         ),
       );
 }
@@ -176,10 +228,9 @@ class _AddImageBottomSheetState extends State<AddImageBottomSheet> {
                     text: "Камера",
                     onTap: () async {
                       setState(() => showLinkInput = false);
-                      final cameras = await availableCameras();
-                      final firstCamera = cameras.first;
+                      final camera = (await availableCameras()).first;
                       var imageFile =
-                          await Get.to(TakePhotoPage(camera: firstCamera));
+                          await Get.to(TakePhotoPage(camera: camera));
                       Get.back(result: imageFile);
                     },
                   ),
@@ -227,6 +278,35 @@ class _AddImageBottomSheetState extends State<AddImageBottomSheet> {
             onTap: onTap,
             borderRadius: BorderRadius.circular(20)),
       ),
+    );
+  }
+}
+
+class ColorPickerDialog extends StatelessWidget {
+  final Color initial;
+  final Function(Color color) change;
+
+  const ColorPickerDialog({Key key, this.initial, this.change})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Выбери цвет'),
+      content: SingleChildScrollView(
+        child: ColorPicker(
+          pickerColor: initial,
+          onColorChanged: (color) => change(color),
+          showLabel: true,
+          pickerAreaHeightPercent: 0.8,
+        ),
+      ),
+      actions: <Widget>[
+        FlatButton(
+          child: const Text('Готово'),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+      ],
     );
   }
 }

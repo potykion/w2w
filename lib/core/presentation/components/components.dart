@@ -62,8 +62,11 @@ class WithHeadlineText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget textRow = Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Text(text, style: Theme.of(context).textTheme.headline6),
+        Padding(
+            padding: EdgeInsets.only(bottom: 10),
+            child: Text(text, style: Theme.of(context).textTheme.headline6)),
         Spacer(),
         if (trailing != null) trailing
       ],
@@ -211,3 +214,4 @@ class _LinkSubmitInputState extends State<LinkSubmitInput> {
     );
   }
 }
+

@@ -47,8 +47,10 @@ dependencies:
   hive: ^1.4.4+1
   hive_flutter: ^0.3.1
 
-  # групп-бай и все такое
+  # групп-бай, кортежи и все такое
   collection: ^1.14.13
+  tuple: ^1.0.3
+
 
   # выбор файла
   file_picker: ^2.0.11
@@ -59,6 +61,14 @@ dependencies:
   # работа с путями
   path_provider:
   path:
+
+  # колор-пикер
+  flutter_colorpicker: ^0.3.4
+
+  # работа с картинками
+  image: ^2.1.19
+
+
 
 dev_dependencies:
   flutter_test:

@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
@@ -9,7 +10,6 @@ import 'bindings.dart';
 
 void main() async {
   await Hive.initFlutter();
-
   await Get.putAsync<Box>(() => Hive.openBox("clothing"), tag: "clothingBox");
 
   runApp(MyApp());
@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
         theme: theme,
         getPages: pages,
         initialRoute: Routes.clothingList,
+        // initialRoute: Routes.playground,
         initialBinding: binding,
       );
 }

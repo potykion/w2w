@@ -215,10 +215,3 @@ class _LinkSubmitInputState extends State<LinkSubmitInput> {
   }
 }
 
-Color colorFromStr(String colorHex) {
-  try {
-    return Color(int.parse("0xff$colorHex"));
-  } on FormatException {
-    return Colors.black;
-  }
-}

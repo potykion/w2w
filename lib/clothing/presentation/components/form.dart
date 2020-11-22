@@ -1,4 +1,3 @@
-
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -137,7 +136,8 @@ class _ClothingColorInputState extends State<ClothingColorInput> {
                       onPressed: () async {
                         final camera = (await availableCameras()).first;
                         var color =
-                            await Get.to(PickPhotoColorPage(camera: camera)) as Color;
+                            await Get.to(PickPhotoColorPage(camera: camera))
+                                as Color;
                         tec.text = color.toRGBHex();
                       },
                     )
@@ -292,7 +292,7 @@ class ColorPickerDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Pick a color!'),
+      title: const Text('Выбери цвет'),
       content: SingleChildScrollView(
         child: ColorPicker(
           pickerColor: initial,
@@ -303,10 +303,8 @@ class ColorPickerDialog extends StatelessWidget {
       ),
       actions: <Widget>[
         FlatButton(
-          child: const Text('Got it'),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
+          child: const Text('Готово'),
+          onPressed: () => Navigator.of(context).pop(),
         ),
       ],
     );

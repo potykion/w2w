@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart' show Color;
 import 'package:get/get.dart';
 import 'package:image/image.dart' show copyRotate, decodeImage, Image;
-import 'package:image/src/image.dart';
 import 'package:w2w/core/utils.dart';
 import 'package:tuple/tuple.dart';
 

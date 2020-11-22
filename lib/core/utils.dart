@@ -7,3 +7,12 @@ String abgr2argb(String pixelColor) {
 extension ColorExt on Color {
   String toRGBHex() => this.value.toRadixString(16).substring(2);
 }
+
+
+Color colorFromStr(String colorHex) {
+  try {
+    return Color(int.parse("0xff$colorHex"));
+  } on FormatException {
+    return Colors.black;
+  }
+}

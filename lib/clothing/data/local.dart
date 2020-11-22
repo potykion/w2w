@@ -17,9 +17,10 @@ class ClothingLocalStorage {
   // updateClothing(Clothing clothing, int clothingId) =>
   //     box.putAt(clothingId, clothing.toJson());
 
-  findTypeByPattern(String typePattern) => box.values
+  List<String> findTypeByPattern(String typePattern) => box.values
       .map((clothingJson) => clothingJson["type"] as String)
       .where((type) => type.toLowerCase().contains(typePattern.toLowerCase()))
+      .toSet()
       .toList();
 }
 

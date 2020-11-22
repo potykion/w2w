@@ -1,7 +1,5 @@
-import 'dart:io';
 
 import 'package:camera/camera.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -10,6 +8,7 @@ import 'package:w2w/clothing/domain/repos.dart';
 import 'package:w2w/core/presentation/pages/pages.dart';
 import '../../data/local.dart';
 import '../../../core/presentation/components/components.dart';
+import '../../../core/utils.dart';
 
 class ClothingTitleInput extends StatelessWidget {
   final String initial;
@@ -111,25 +110,41 @@ class _ClothingColorInputState extends State<ClothingColorInput> {
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               suffixIcon: Padding(
-                padding: const EdgeInsets.only(right: 13.0),
-                child: GestureDetector(
-                  child: CircleAvatar(
-                    backgroundColor: Colors.black,
-                    child: CircleAvatar(
-                      backgroundColor: colorFromStr(colorHex),
-                      radius: 12,
+                padding: const EdgeInsets.only(right: 5.0),
+                child: Row(
+                  children: [
+                    GestureDetector(
+                      child: CircleAvatar(
+                        radius: 12,
+                        backgroundColor: Colors.black,
+                        child: CircleAvatar(
+                          backgroundColor: colorFromStr(colorHex),
+                          radius: 10,
+                        ),
+                      ),
+                      onTap: () {
+                        Get.dialog(ColorPickerDialog(
+                          initial: colorFromStr(colorHex),
+                          change: (color) {
+                            tec.text = color.toRGBHex();
+                          },
+                        ));
+                      },
                     ),
-                  ),
-                  onTap: () {
-                    Get.dialog(ColorPickerDialog(
-                      initial: colorFromStr(colorHex),
-                      change: (color) => setState(() => tec.text =
-                          color.value.toRadixString(16).substring(2)),
-                    ));
-                  },
+                    IconButton(
+                      color: Colors.black,
+                      icon: Icon(Icons.camera_alt),
+                      onPressed: () async {
+                        final camera = (await availableCameras()).first;
+                        var color =
+                            await Get.to(PickPhotoColorPage(camera: camera)) as Color;
+                        tec.text = color.toRGBHex();
+                      },
+                    )
+                  ],
                 ),
               ),
-              suffixIconConstraints: BoxConstraints.tight(Size(40, 40)),
+              suffixIconConstraints: BoxConstraints.tight(Size(80, 40)),
             ),
           ),
         ),
@@ -213,10 +228,9 @@ class _AddImageBottomSheetState extends State<AddImageBottomSheet> {
                     text: "Камера",
                     onTap: () async {
                       setState(() => showLinkInput = false);
-                      final cameras = await availableCameras();
-                      final firstCamera = cameras.first;
+                      final camera = (await availableCameras()).first;
                       var imageFile =
-                          await Get.to(TakePhotoPage(camera: firstCamera));
+                          await Get.to(TakePhotoPage(camera: camera));
                       Get.back(result: imageFile);
                     },
                   ),

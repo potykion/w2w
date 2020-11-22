@@ -63,6 +63,10 @@ class TakePhotoPageState extends State<TakePhotoPage> {
 }
 
 class PickPhotoColorPage extends StatefulWidget {
+  final CameraDescription camera;
+
+  const PickPhotoColorPage({Key key, this.camera}) : super(key: key);
+
   @override
   PickPhotoColorPageState createState() => PickPhotoColorPageState();
 }
@@ -76,7 +80,7 @@ class PickPhotoColorPageState extends State<PickPhotoColorPage> {
   void initState() {
     super.initState();
     _controller = CameraController(
-      Get.arguments as CameraDescription,
+      widget.camera,
       ResolutionPreset.medium,
     );
 

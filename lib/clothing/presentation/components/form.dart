@@ -19,8 +19,7 @@ class ClothingTitleInput extends StatelessWidget {
       : super(key: key);
 
   @override
-  Widget build(BuildContext context) =>
-      FixedPadding(
+  Widget build(BuildContext context) => FixedPadding(
         child: WithHeadlineText(
           text: "Название",
           child: TextInput(initial: initial, change: change),
@@ -50,8 +49,7 @@ class _ClothingTypeInputState extends State<ClothingTypeInput> {
   }
 
   @override
-  Widget build(BuildContext context) =>
-      FixedPadding(
+  Widget build(BuildContext context) => FixedPadding(
         child: WithHeadlineText(
           text: "Тип",
           child: TypeAheadFormField<String>(
@@ -104,8 +102,7 @@ class _ClothingColorInputState extends State<ClothingColorInput> {
   }
 
   @override
-  Widget build(BuildContext context) =>
-      FixedPadding(
+  Widget build(BuildContext context) => FixedPadding(
         child: WithHeadlineText(
           text: "Цвет",
           child: TextFormField(
@@ -124,30 +121,11 @@ class _ClothingColorInputState extends State<ClothingColorInput> {
                     ),
                   ),
                   onTap: () {
-                    showDialog(
-                      context: context,
-                      child: AlertDialog(
-                        title: const Text('Pick a color!'),
-                        content: SingleChildScrollView(
-                          child: ColorPicker(
-                            pickerColor: colorFromStr(colorHex),
-                            onColorChanged: (color) =>
-                                setState(() =>
-                                tec.text = color.value.toRadixString(16).substring(2)),
-                            showLabel: true,
-                            pickerAreaHeightPercent: 0.8,
-                          ),
-                        ),
-                        actions: <Widget>[
-                          FlatButton(
-                            child: const Text('Got it'),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                        ],
-                      ),
-                    );
+                    Get.dialog(ColorPickerDialog(
+                      initial: colorFromStr(colorHex),
+                      change: (color) => setState(() => tec.text =
+                          color.value.toRadixString(16).substring(2)),
+                    ));
                   },
                 ),
               ),
@@ -180,8 +158,7 @@ class _ClothingImagesInputState extends State<ClothingImagesInput> {
   }
 
   @override
-  Widget build(BuildContext context) =>
-      FixedPadding(
+  Widget build(BuildContext context) => FixedPadding(
         child: WithHeadlineText(
           text: "Фоточки",
           child: SizedBox(
@@ -221,8 +198,7 @@ class _AddImageBottomSheetState extends State<AddImageBottomSheet> {
   bool showLinkInput = false;
 
   @override
-  Widget build(BuildContext context) =>
-      Container(
+  Widget build(BuildContext context) => Container(
         constraints: BoxConstraints(minHeight: 120, maxHeight: 220),
         child: Card(
           color: Colors.white,
@@ -240,7 +216,7 @@ class _AddImageBottomSheetState extends State<AddImageBottomSheet> {
                       final cameras = await availableCameras();
                       final firstCamera = cameras.first;
                       var imageFile =
-                      await Get.to(TakePhotoPage(camera: firstCamera));
+                          await Get.to(TakePhotoPage(camera: firstCamera));
                       Get.back(result: imageFile);
                     },
                   ),
@@ -250,7 +226,7 @@ class _AddImageBottomSheetState extends State<AddImageBottomSheet> {
                     onTap: () async {
                       setState(() => showLinkInput = false);
                       var imageFile =
-                      await Get.find<BaseClothingImageFilePicker>()();
+                          await Get.find<BaseClothingImageFilePicker>()();
                       if (imageFile != null) {
                         Get.back(result: imageFile);
                       }
@@ -288,6 +264,37 @@ class _AddImageBottomSheetState extends State<AddImageBottomSheet> {
             onTap: onTap,
             borderRadius: BorderRadius.circular(20)),
       ),
+    );
+  }
+}
+
+class ColorPickerDialog extends StatelessWidget {
+  final Color initial;
+  final Function(Color color) change;
+
+  const ColorPickerDialog({Key key, this.initial, this.change})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Pick a color!'),
+      content: SingleChildScrollView(
+        child: ColorPicker(
+          pickerColor: initial,
+          onColorChanged: (color) => change(color),
+          showLabel: true,
+          pickerAreaHeightPercent: 0.8,
+        ),
+      ),
+      actions: <Widget>[
+        FlatButton(
+          child: const Text('Got it'),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ],
     );
   }
 }

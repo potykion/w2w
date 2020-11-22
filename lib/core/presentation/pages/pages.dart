@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:image/image.dart' show copyRotate, decodeImage;
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:w2w/clothing/domain/use_cases.dart';
 
 import '../../utils.dart';
 
@@ -110,29 +111,10 @@ class PickPhotoColorPageState extends State<PickPhotoColorPage> {
 
                             await _controller.takePicture(path);
 
-                            var image = copyRotate(
-                              decodeImage(await File(path).readAsBytes()),
-                              90,
-                            );
-
-                            var normalizedX = (details.globalPosition.dx /
-                                    Get.mediaQuery.size.width *
-                                    image.width)
-                                .toInt();
-                            var normalizedY = (details.globalPosition.dy /
-                                    Get.mediaQuery.size.height *
-                                    image.height)
-                                .toInt();
-
-                            var color = Color(
-                              int.parse(
-                                abgr2argb(
-                                  image
-                                      .getPixel(normalizedX, normalizedY)
-                                      .toRadixString(16),
-                                ),
-                                radix: 16,
-                              ),
+                            var color = Get.find<PickPixelColor>()(
+                              path,
+                              details.globalPosition.dx,
+                              details.globalPosition.dy,
                             );
 
                             setState(() => selectedColor = color);

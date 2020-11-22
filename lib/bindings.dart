@@ -5,6 +5,7 @@ import 'clothing/data/local.dart';
 import 'clothing/data/remote.dart';
 import 'clothing/data/repos.dart';
 import 'clothing/domain/repos.dart';
+import 'clothing/domain/use_cases.dart';
 import 'clothing/presentation/state/controllers.dart';
 
 class ClothingBinding implements Bindings {
@@ -24,6 +25,11 @@ class ClothingBinding implements Bindings {
       ),
     );
     Get.put<BaseClothingImageFilePicker>(ClothingImageFilePicker());
+
+    Get.put<PickPixelColor>(PickPixelColor(
+      loadImage: LoadFileImage(),
+      normalizeCoordinates: NormalizeCoordinatesRegardingImage(),
+    ));
 
     Get.put(ClothingController(Get.find<BaseClothingRepo>()));
   }
